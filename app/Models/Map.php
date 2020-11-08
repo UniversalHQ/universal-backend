@@ -5,6 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class Map
+ *
+ * @package App\Models
+ * @property \Illuminate\Database\Eloquent\Builder
+ */
 class Map extends Model
 {
     use HasFactory;
@@ -12,16 +18,11 @@ class Map extends Model
     protected $fillable = [
         'name',
         'e_tag',
-        'totalEnlistments',
-        'colonialCasualties',
-        'wardenCasualties',
-        'dayOfWar',
-        'version',
     ];
 
-    public function mapData()
+    public function mapWarReports()
     {
-        return $this->hasMany(MapData::class);
+        return $this->hasMany(MapWarReport::class);
     }
 
 }

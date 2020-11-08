@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateWarDataTable extends Migration
+class CreateWarTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,19 +13,23 @@ class CreateWarDataTable extends Migration
      */
     public function up()
     {
-        Schema::create('war_data', function (Blueprint $table) {
+        Schema::create('wars', function (Blueprint $table) {
             $table->id();
 
-            $table->uuid('warId');
-            $table->integer('warNumber');
-            $table->integer('requiredVictoryTowns');
+            $table->uuid('war_id');
+            $table->integer('war_number');
+            $table->integer('required_victory_towns');
             $table->string('winner')->nullable();
-            $table->unsignedBigInteger('conquestStartTime')->nullable();
+
+            $table->unsignedBigInteger('conquest_start_time');
             $table->dateTime('started_at')->nullable();
-            $table->unsignedBigInteger('conquestEndTime')->nullable();
+            $table->unsignedBigInteger('conquest_end_time')->nullable();
             $table->dateTime('ended_at')->nullable();
-            $table->unsignedBigInteger('resistanceStartTime')->nullable();
+            $table->unsignedBigInteger('resistance_start_time')->nullable();
             $table->dateTime('resistance_at')->nullable();
+
+            $table->text('active_tiles_string')->nullable();
+            $table->text('active_resistance_tiles_string')->nullable();
 
             $table->timestamps();
             $table->softDeletes();
@@ -39,6 +43,6 @@ class CreateWarDataTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('war_data');
+        Schema::dropIfExists('wars');
     }
 }

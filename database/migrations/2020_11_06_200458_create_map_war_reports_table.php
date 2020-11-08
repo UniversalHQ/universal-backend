@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMapsTable extends Migration
+class CreateMapWarReportsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,17 @@ class CreateMapsTable extends Migration
      */
     public function up()
     {
-        Schema::create('maps', function (Blueprint $table) {
+        Schema::create('map_war_reports', function (Blueprint $table) {
             $table->id();
-            $table->string('e_tag');
+            $table->unsignedBigInteger('map_id');
+            $table->unsignedBigInteger('war_id');
 
             $table->string('name');
-            $table->string('hex_name');
-            $table->boolean('active')->default(false);
+            $table->integer('totalEnlistments');
+            $table->integer('colonialCasualties');
+            $table->integer('wardenCasualties');
+            $table->integer('dayOfWar');
+            $table->integer('version');
 
             $table->softDeletes();
             $table->timestamps();
@@ -33,6 +37,6 @@ class CreateMapsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('maps');
+        Schema::dropIfExists('map_war_reports');
     }
 }

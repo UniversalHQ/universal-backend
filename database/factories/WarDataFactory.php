@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\WarData;
+use App\Models\War;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class WarDataFactory extends Factory
@@ -12,7 +12,7 @@ class WarDataFactory extends Factory
      *
      * @var string
      */
-    protected $model = WarData::class;
+    protected $model = War::class;
 
     /**
      * Define the model's default state.
