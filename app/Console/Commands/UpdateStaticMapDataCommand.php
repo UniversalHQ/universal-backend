@@ -2,17 +2,18 @@
 
 namespace App\Console\Commands;
 
-use App\Jobs\UpdateWarJob;
+use App\Jobs\UpdateStaticMapDataJob;
+use App\Models\Map;
 use Illuminate\Console\Command;
 
-class UpdateWarCommand extends Command
+class UpdateStaticMapDataCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'api:update-war';
+    protected $signature = 'api:update-static-data';
 
     /**
      * The console command description.
@@ -34,10 +35,16 @@ class UpdateWarCommand extends Command
     /**
      * Execute the console command.
      *
-     * @return void
+     * @return int
      */
     public function handle()
     {
-        UpdateWarJob::dispatchNow();
+        $activeMaps = Map::active()->get();
+
+        $activeMaps->each(function (Map $map) {
+            UpdateStaticMapDataJob::dispatch($map->hex_name);
+        });
+
+        return 0;
     }
 }

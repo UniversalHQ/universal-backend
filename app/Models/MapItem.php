@@ -6,35 +6,32 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class MapWarReport
+ * Class MapItem
  *
  * @package App\Models
  * @mixin \Illuminate\Database\Eloquent\Builder
+ * @property \App\Models\Map map
+ * @property string          team_id
+ * @property string          icon_type
+ * @property string          flags
+ * @property decimal         x
+ * @property decimal         y
  */
-class MapWarReport extends Model
+class MapItem extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'war_id',
         'map_id',
-        'name',
-        'e_tag',
-        'totalEnlistments',
-        'colonialCasualties',
-        'wardenCasualties',
-        'dayOfWar',
-        'version',
+        'team_id',
+        'icon_type',
+        'flags',
+        'x',
+        'y',
     ];
 
     public function map()
     {
         return $this->belongsTo(Map::class);
     }
-
-    public function war()
-    {
-        return $this->belongsTo(War::class);
-    }
-
 }

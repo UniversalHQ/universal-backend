@@ -11,7 +11,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Http;
 
-class UpdateMapJob implements ShouldQueue
+class UpdateWarReportJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -36,15 +36,15 @@ class UpdateMapJob implements ShouldQueue
     {
         $map = Map::where('hex_name', $this->hexName)->first();
 
-        $response2 = Http::withHeaders(['If-None-Match' => $map->e_tag ?? '"0"'])
+        $response2 = Http::withHeaders(['If-None-Match' => $map->report_e_tag ?? '"0"'])
                          ->get('https://war-service-live.foxholeservices.com/api/worldconquest/warReport/' . $this->hexName);
 
         if ($response2->status() === 304) {
-            logger()->info($map->name . ' Has not been updated');
+            logger()->info($map->name . ' has not been updated');
 
             return;
         }
-        $map->e_tag = $response2->header('ETag');
+        $map->report_e_tag = $response2->header('ETag');
         $map->save();
 
         War::getCurrentWar()->mapWarReports()->create(array_merge([

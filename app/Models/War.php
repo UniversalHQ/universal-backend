@@ -57,5 +57,4 @@ class War extends Model
         return $this->hasMany(MapWarReport::class);
     }
 
-
 }

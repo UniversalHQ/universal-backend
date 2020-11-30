@@ -15,10 +15,13 @@ class CreateMapsTable extends Migration
     {
         Schema::create('maps', function (Blueprint $table) {
             $table->id();
-            $table->string('e_tag');
+            $table->string('report_e_tag');
+            $table->string('static_e_tag');
+            $table->string('dynamic_e_tag');
 
             $table->string('name');
             $table->string('hex_name');
+            $table->string('region_id');
             $table->boolean('active')->default(false);
 
             $table->softDeletes();
