@@ -22,6 +22,7 @@ class MapTextItem extends Model
 
     protected $fillable = [
         'map_id',
+        'map_object_id',
         'text',
         'map_marker_type',
         'x',
@@ -31,5 +32,10 @@ class MapTextItem extends Model
     public function map()
     {
         return $this->belongsTo(Map::class);
+    }
+
+    public function mapObject()
+    {
+        return $this->belongsTo(MapObject::class);
     }
 }

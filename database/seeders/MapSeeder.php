@@ -16,7 +16,7 @@ class MapSeeder extends Seeder
     {
         Map::create([
             'hex_name'      => 'DeadLandsHex',
-            'name'          => 'Dead Lands',
+            'name'          => 'Deadlands',
             'region_id'     => 3,
             'report_e_tag'  => '"0"',
             'static_e_tag'  => '"0"',
@@ -64,7 +64,7 @@ class MapSeeder extends Seeder
         ]);
         Map::create([
             'hex_name'      => 'LochMorHex',
-            'name'          => 'Loch Mor',
+            'name'          => 'Loch Mór',
             'region_id'     => 9,
             'report_e_tag'  => '"0"',
             'static_e_tag'  => '"0"',

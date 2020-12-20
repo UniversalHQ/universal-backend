@@ -17,6 +17,10 @@ use Illuminate\Database\Eloquent\Model;
  * @property string report_e_tag
  * @property string static_e_tag
  * @property string dynamic_e_tag
+ * @property string dynamic_timestamp
+ * @property \Illuminate\Database\Eloquent\Collection mapTextItems
+ * @property \Illuminate\Database\Eloquent\Collection mapItems
+ * @property \Illuminate\Database\Eloquent\Collection mapObjects
  */
 class Map extends Model
 {
@@ -29,11 +33,27 @@ class Map extends Model
         'report_e_tag',
         'static_e_tag',
         'dynamic_e_tag',
+        'dynamic_timestamp',
     ];
 
     public function mapWarReports()
     {
         return $this->hasMany(MapWarReport::class);
+    }
+
+    public function mapItems()
+    {
+        return $this->hasMany(MapItem::class);
+    }
+
+    public function mapTextItems()
+    {
+        return $this->hasMany(MapTextItem::class);
+    }
+
+    public function mapObjects()
+    {
+        return $this->hasMany(MapObject::class);
     }
 
     public function scopeActive($query)

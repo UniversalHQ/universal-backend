@@ -16,11 +16,13 @@ class CreateMapTextItemsTable extends Migration
         Schema::create('map_text_items', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('map_id');
+            $table->unsignedBigInteger('map_object_id')->nullable();
 
             $table->string('text');
             $table->string('map_marker_type');
-            $table->decimal('x',10,8);
-            $table->decimal('y',10,8);
+            $table->decimal('x',12,10);
+            $table->decimal('y',12,10);
+
             $table->timestamps();
         });
     }

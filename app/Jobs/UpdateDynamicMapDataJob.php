@@ -46,7 +46,6 @@ class UpdateDynamicMapDataJob implements ShouldQueue
             return;
         }
 
-
         $dataArray = $response->json();
         if (isset($dataArray['mapTextItems'])) {
             foreach ($dataArray['mapTextItems'] as $mapTextItem) {
@@ -69,13 +68,15 @@ class UpdateDynamicMapDataJob implements ShouldQueue
                 ], [
                     'team_id'   => $mapItem['teamId'],
                     'icon_type' => $mapItem['iconType'],
-                    'flags'    => $mapItem['flags'],
+                    'flags'     => $mapItem['flags'],
                 ]);
             }
         }
         $map->dynamic_e_tag = $response->header('ETag');
+        $map->dynamic_timestamp = $dataArray['dynamic_timestamp'];
         $map->save();
         logger()->info($map->name . ' dynamic data has been updated');
+        UpdateMapObjectsJob::dispatch($map);
     }
 }
 

@@ -16,11 +16,14 @@ class CreateMapItemsTable extends Migration
         Schema::create('map_items', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('map_id');
+            $table->unsignedBigInteger('map_object_id')->nullable();
+
             $table->string('team_id');
             $table->integer('icon_type');
             $table->integer('flags');
-            $table->decimal('x',10,8);
-            $table->decimal('y',10,8);
+            $table->decimal('x',12,10);
+            $table->decimal('y',12,10);
+
             $table->timestamps();
         });
     }

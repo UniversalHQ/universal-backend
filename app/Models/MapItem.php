@@ -34,4 +34,9 @@ class MapItem extends Model
     {
         return $this->belongsTo(Map::class);
     }
+
+    public function mapObject()
+    {
+        return $this->belongsTo(MapObject::class);
+    }
 }

@@ -18,6 +18,7 @@ class CreateMapsTable extends Migration
             $table->string('report_e_tag');
             $table->string('static_e_tag');
             $table->string('dynamic_e_tag');
+            $table->string('dynamic_timestamp');
 
             $table->string('name');
             $table->string('hex_name');
