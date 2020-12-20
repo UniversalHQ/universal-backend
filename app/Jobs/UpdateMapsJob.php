@@ -42,6 +42,9 @@ class UpdateMapsJob implements ShouldQueue
             logger()->info(Artisan::output());
             Map::whereIn('hex_name', $mapsResponse->json())->update(['active' => true]);
             Map::whereNotIn('hex_name', $mapsResponse->json())->update(['active' => false]);
+            Map::active()->get()->each(function (Map $map) {
+                UpdateStaticMapDataJob::dispatch($map->hex_name);
+            });
         }
 
         collect($mapsResponse->json())->each(function ($mapName) {

@@ -73,7 +73,7 @@ class UpdateDynamicMapDataJob implements ShouldQueue
             }
         }
         $map->dynamic_e_tag = $response->header('ETag');
-        $map->dynamic_timestamp = $dataArray['dynamic_timestamp'];
+        $map->dynamic_timestamp = $dataArray['lastUpdated'];
         $map->save();
         logger()->info($map->name . ' dynamic data has been updated');
         UpdateMapObjectsJob::dispatch($map);

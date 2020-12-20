@@ -5,7 +5,9 @@ namespace App\Jobs;
 use App\Models\Map;
 use App\Models\MapItem;
 use App\Models\MapObject;
+use App\Models\MapObjectUpdate;
 use App\Models\MapTextItem;
+use App\Models\War;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Database\Eloquent\Collection;
@@ -113,18 +115,26 @@ class UpdateMapObjectsJob implements ShouldQueue
                     'is_victory_base' => $mapItem->flags & self::IS_VICTORY_BASE,
                     'is_build_site'   => $mapItem->flags & self::IS_BUILD_SITE,
                 ]);
-                logger()->info('MapObject #' . $mapItem->mapObject->id . ' has been updated', $mapItem->mapObject->getChanges());
+                logger()->info('MapObject #' . $mapItem->mapObject->id . ' has been updated',
+                    $mapItem->mapObject->getChanges());
+                $updatedData = array_merge($mapItem->mapObject->getChanges(), [
+                    'map_object_id'     => $mapItem->mapObject->id,
+                    'dynamic_timestamp' => $this->map->dynamic_timestamp,
+                ]);
+                MapObjectUpdate::create($updatedData);
             }
         });
     }
 
     public function assignMapObjects(Collection $mapItems)
     {
-        $mapItems->each(function (MapItem $mapItem) {
+        $war = War::orderBy('war_number', 'desc')->first();
+        $mapItems->each(function (MapItem $mapItem) use ($war) {
             $matchingTextItem = $this->findMatchingTextItem($mapItem);
 
             $mapObect = MapObject::create([
                 'map_id'          => $mapItem->map_id,
+                'war_id'          => $war->id,
                 'x'               => $mapItem->x,
                 'y'               => $mapItem->y,
                 'text'            => $matchingTextItem->text,

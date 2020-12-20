@@ -2,6 +2,8 @@
 
 namespace App\Jobs;
 
+use App\Models\MapItem;
+use App\Models\MapTextItem;
 use App\Models\War;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -14,8 +16,6 @@ use Illuminate\Support\Facades\Http;
 class UpdateWarJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-
-    protected $hexName;
 
     /**
      * Create a new job instance.
@@ -62,8 +62,12 @@ class UpdateWarJob implements ShouldQueue
             }
             $war->save();
             logger()->info('War State changed. Active GameTiles have been updated.');
+            if($war->wasRecentlyCreated){
+                MapItem::query()->delete();
+                MapTextItem::query()->delete();
+            }
         } else {
-            logger()->info('War State hasn`t changed.');
+            logger()->info('War State has not changed.');
         }
     }
 }

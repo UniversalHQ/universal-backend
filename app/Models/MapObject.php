@@ -30,6 +30,7 @@ class MapObject extends Model
 
     protected $fillable = [
         'map_id',
+        'war_id',
         'team_id',
         'text',
         'object_type',

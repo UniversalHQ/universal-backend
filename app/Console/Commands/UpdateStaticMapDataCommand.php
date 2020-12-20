@@ -39,9 +39,7 @@ class UpdateStaticMapDataCommand extends Command
      */
     public function handle()
     {
-        $activeMaps = Map::active()->get();
-
-        $activeMaps->each(function (Map $map) {
+        Map::active()->get()->each(function (Map $map) {
             UpdateStaticMapDataJob::dispatch($map->hex_name);
         });
 
