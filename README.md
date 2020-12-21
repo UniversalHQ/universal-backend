@@ -20,12 +20,14 @@ This is a PHP Laravel Project. The frontend will be done in VueJs / Livewire / I
 * The foxhole API is integrated and WarReports are saved historically.
 
 ToDo: 
-* Historize town/base caputures.
 * Add frontend map view.
 * Add User management.
 * Add interaction on the map.
 * Save map states.
 
+Done:
+* Integrate Foxhole API
+* Historize MapData
 
 If you want to help, contact me on discord: Afrowner#9766
 
