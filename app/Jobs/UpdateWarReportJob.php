@@ -15,14 +15,14 @@ class UpdateWarReportJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    protected $hexName;
+    protected string $hexName;
 
     /**
      * Create a new job instance.
      *
      * @param $hexName
      */
-    public function __construct($hexName)
+    public function __construct(string $hexName)
     {
         $this->hexName = $hexName;
     }

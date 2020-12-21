@@ -101,13 +101,15 @@ class UpdateMapObjectsJob implements ShouldQueue
         $this->map->load('mapItems.mapObject');
 
         $this->map->mapItems->each(function (MapItem $mapItem) {
-            if ($mapItem->team_id != $mapItem->mapObject->team_id ||//Town Owner Changed
-                $mapItem->icon_type != $mapItem->mapObject->icon_type ||//Town Level changed
-                ($mapItem->flags & self::IS_BUILD_SITE) != $mapItem->mapObject->is_build_site ||//Object build status changed
-                ($mapItem->flags & self::IS_VICTORY_BASE) != $mapItem->mapObject->is_victory_base ||//shouldn`t change...
-                ($mapItem->flags & self::IS_SCORCHED) != $mapItem->mapObject->is_scorched//Got hit by a rocket :D
+            $mapObject = $mapItem->mapObject;
+            if (
+                $mapItem->team_id != $mapObject->team_id ||//Town Owner Changed
+                $mapItem->icon_type != $mapObject->icon_type ||//Town Level changed
+                ($mapItem->flags & self::IS_BUILD_SITE) != $mapObject->is_build_site ||//Object build status changed
+                ($mapItem->flags & self::IS_VICTORY_BASE) != $mapObject->is_victory_base ||//shouldn`t change...
+                ($mapItem->flags & self::IS_SCORCHED) != $mapObject->is_scorched//Got hit by a rocket :D
             ) {
-                $mapItem->mapObject->update([
+                $mapObject->update([
                     'team_id'         => $mapItem->team_id,
                     'icon_type'       => $mapItem->icon_type,
                     'object_type'     => self::OBJECT_TYPES[$mapItem->icon_type],
@@ -115,24 +117,23 @@ class UpdateMapObjectsJob implements ShouldQueue
                     'is_victory_base' => $mapItem->flags & self::IS_VICTORY_BASE,
                     'is_build_site'   => $mapItem->flags & self::IS_BUILD_SITE,
                 ]);
-                logger()->info('MapObject #' . $mapItem->mapObject->id . ' has been updated',
-                    $mapItem->mapObject->getChanges());
-                $updatedData = array_merge($mapItem->mapObject->getChanges(), [
-                    'map_object_id'     => $mapItem->mapObject->id,
-                    'dynamic_timestamp' => $this->map->dynamic_timestamp,
-                ]);
-                MapObjectUpdate::create($updatedData);
+                logger()->info('MapObject #' . $mapObject->id . ' has been updated', $mapObject->getChanges());
+
+                $this->createUpdateObject($mapObject);
             }
         });
     }
 
-    public function assignMapObjects(Collection $mapItems)
+    /**
+     * @param \Illuminate\Database\Eloquent\Collection $mapItems
+     */
+    public function assignMapObjects(Collection $mapItems): void
     {
         $war = War::orderBy('war_number', 'desc')->first();
         $mapItems->each(function (MapItem $mapItem) use ($war) {
             $matchingTextItem = $this->findMatchingTextItem($mapItem);
 
-            $mapObect = MapObject::create([
+            $mapObject = MapObject::create([
                 'map_id'          => $mapItem->map_id,
                 'war_id'          => $war->id,
                 'x'               => $mapItem->x,
@@ -145,17 +146,16 @@ class UpdateMapObjectsJob implements ShouldQueue
                 'is_victory_base' => $mapItem->flags & self::IS_VICTORY_BASE,
                 'is_build_site'   => $mapItem->flags & self::IS_BUILD_SITE,
             ]);
-            $mapItem->mapObject()->associate($mapObect)->save();
-            $matchingTextItem->mapObject()->associate($mapObect)->save();
+            $mapItem->mapObject()->associate($mapObject)->save();
+            $matchingTextItem->mapObject()->associate($mapObject)->save();
+            $this->createUpdateObject($mapObject);
         });
     }
 
     /**
-     *
-     *
      * @param \App\Models\MapItem $mapItem
      *
-     * @return array
+     * @return object
      */
     private function findMatchingTextItem(MapItem $mapItem): object
     {
@@ -170,5 +170,21 @@ class UpdateMapObjectsJob implements ShouldQueue
         asort($tDif);
 
         return MapTextItem::find(array_key_first($tDif));
+    }
+
+    /**
+     * @param \App\Models\MapObject $mapObject
+     */
+    private function createUpdateObject(MapObject $mapObject): void
+    {
+        $newMapObjectData = $mapObject->wasRecentlyCreated
+            ? $mapObject->getAttributes()
+            : $mapObject->getChanges();
+
+        $updatedData = array_merge($newMapObjectData, [
+            'map_object_id'     => $mapObject->id,
+            'dynamic_timestamp' => $this->map->dynamic_timestamp,
+        ]);
+        MapObjectUpdate::create($updatedData);
     }
 }
