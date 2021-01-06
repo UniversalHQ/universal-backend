@@ -28,6 +28,7 @@ class War extends Model
     use HasFactory;
 
     protected $fillable = [
+        'id',
         'war_id',
         'war_number',
         'required_victory_towns',

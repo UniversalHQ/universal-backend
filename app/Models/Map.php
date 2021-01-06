@@ -11,13 +11,13 @@ use Illuminate\Database\Eloquent\Model;
  * @package App\Models
  * @mixin  \Illuminate\Database\Eloquent\Builder
  * @method active
- * @property string hex_name
- * @property string name
- * @property int    region_id
- * @property string report_e_tag
- * @property string static_e_tag
- * @property string dynamic_e_tag
- * @property string dynamic_timestamp
+ * @property string                                   hex_name
+ * @property string                                   name
+ * @property int                                      region_id
+ * @property string                                   report_e_tag
+ * @property string                                   static_e_tag
+ * @property string                                   dynamic_e_tag
+ * @property string                                   dynamic_timestamp
  * @property \Illuminate\Database\Eloquent\Collection mapTextItems
  * @property \Illuminate\Database\Eloquent\Collection mapItems
  * @property \Illuminate\Database\Eloquent\Collection mapObjects
@@ -36,9 +36,9 @@ class Map extends Model
         'dynamic_timestamp',
     ];
 
-    public function mapWarReports()
+    public function scopeActive($query)
     {
-        return $this->hasMany(MapWarReport::class);
+        $query->where('active', 1);
     }
 
     public function mapItems()
@@ -56,9 +56,38 @@ class Map extends Model
         return $this->hasMany(MapObject::class);
     }
 
-    public function scopeActive($query)
+    public function mapWarReports()
     {
-        $query->where('active', 1);
+        return $this->hasMany(MapWarReport::class);
     }
 
+    public function warReport()
+    {
+        return $this->hasOne(MapWarReport::class)->latest('version');
+    }
+
+    public function getTotalEnlistmentsAttribute()
+    {
+        return $this->warReport->totalEnlistments;
+    }
+
+    public function getColonialCasualtiesAttribute()
+    {
+        return $this->warReport->colonialCasualties;
+    }
+
+    public function getWardenCasualtiesAttribute()
+    {
+        return $this->warReport->wardenCasualties;
+    }
+
+    public function getDayOfWarAttribute()
+    {
+        return $this->warReport->dayOfWar;
+    }
+
+    public function getVersionAttribute()
+    {
+        return $this->warReport->version;
+    }
 }

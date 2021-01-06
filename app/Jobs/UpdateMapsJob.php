@@ -35,7 +35,7 @@ class UpdateMapsJob implements ShouldQueue
     {
         $mapsResponse = Http::get('https://war-service-live.foxholeservices.com/api/worldconquest/maps');
 
-        $activeTilesString = War::orderBy('id', 'desc')->first()->active_tiles_string ?? '';
+        $activeTilesString = War::getCurrentWar()->active_tiles_string ?? '';
         $freshTilesString = implode($mapsResponse->json());
         if ($activeTilesString != $freshTilesString) {
             Artisan::call('api:update-war');

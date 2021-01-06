@@ -36,21 +36,21 @@ class UpdateWarJob implements ShouldQueue
         $dataArray = $response->json();
         $warId = array_shift($dataArray);
         /** @var War */
-        $war = War::updateOrCreate(['war_id' => $warId], [
+        $war = War::updateOrCreate(['war_id' => $warId, 'id' => $dataArray['warNumber']], [
             'war_number'             => $dataArray['warNumber'],
             'required_victory_towns' => $dataArray['requiredVictoryTowns'],
             'winner'                 => $dataArray['winner'],
             'conquest_start_time'    => $dataArray['conquestStartTime'],
             'started_at'             => $dataArray['conquestStartTime']
-                ? Carbon::createFromTimestamp($dataArray['conquestStartTime'])
+                ? Carbon::createFromTimestampMsUTC($dataArray['conquestStartTime'])
                 : null,
             'conquest_end_time'      => $dataArray['conquestEndTime'],
             'ended_at'               => $dataArray['conquestEndTime']
-                ? Carbon::createFromTimestamp($dataArray['conquestEndTime'])
+                ? Carbon::createFromTimestampMsUTC($dataArray['conquestEndTime'])
                 : null,
             'resistance_start_time'  => $dataArray['resistanceStartTime'],
             'resistance_at'          => $dataArray['resistanceStartTime']
-                ? Carbon::createFromTimestamp($dataArray['resistanceStartTime'])
+                ? Carbon::createFromTimestampMsUTC($dataArray['resistanceStartTime'])
                 : null,
         ]);
         if (count($war->getChanges()) || $war->wasRecentlyCreated) {
@@ -62,7 +62,7 @@ class UpdateWarJob implements ShouldQueue
             }
             $war->save();
             logger()->info('War State changed. Active GameTiles have been updated.');
-            if($war->wasRecentlyCreated){
+            if ($war->wasRecentlyCreated) {
                 MapItem::query()->delete();
                 MapTextItem::query()->delete();
             }

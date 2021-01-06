@@ -73,16 +73,21 @@ class UpdateMapObjectsJob implements ShouldQueue
     /**
      * @var \App\Models\Map
      */
-    private $map;
+    private Map $map;
+    /**
+     * @var \App\Models\War|null
+     */
+    private ?War $war;
 
     /**
      * Create a new job instance.
      *
-     * @return void
+     * @param \App\Models\Map $map
      */
     public function __construct(Map $map)
     {
         $this->map = $map;
+        $this->war = War::getCurrentWar() ?? null;
     }
 
     /**
@@ -129,13 +134,12 @@ class UpdateMapObjectsJob implements ShouldQueue
      */
     public function assignMapObjects(Collection $mapItems): void
     {
-        $war = War::orderBy('war_number', 'desc')->first();
-        $mapItems->each(function (MapItem $mapItem) use ($war) {
+        $mapItems->each(function (MapItem $mapItem) {
             $matchingTextItem = $this->findMatchingTextItem($mapItem);
 
             $mapObject = MapObject::create([
                 'map_id'          => $mapItem->map_id,
-                'war_id'          => $war->id,
+                'war_id'          => $this->war->id,
                 'x'               => $mapItem->x,
                 'y'               => $mapItem->y,
                 'text'            => $matchingTextItem->text,

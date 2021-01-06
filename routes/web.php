@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\WarOverviewController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,10 +17,4 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-
-Route::get('/wardata', [\App\Http\Controllers\WarDataController::class,'loadWarData'])
-    ->name('war_data.show');
-
-Route::get('/mapdata', [\App\Http\Controllers\WarDataController::class,'loadMaps'])
-     ->name('map_data.show');
-
+Route::get('/current-war', WarOverviewController::class)->name('war_Overview.show');
