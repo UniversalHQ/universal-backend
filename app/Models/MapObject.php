@@ -9,20 +9,7 @@ use Illuminate\Database\Eloquent\Model;
  * Class MapObject
  *
  * @package App\Models
- * @mixin \Illuminate\Database\Eloquent\Builder
- * @property string                  map_id
- * @property string                  team_id
- * @property string                  text
- * @property string                  object_type
- * @property integer                 icon_type
- * @property boolean                 is_scorched
- * @property boolean                 is_victory_base
- * @property boolean                 is_build_site
- * @property decimal                 x
- * @property decimal                 y
- * @property \App\Models\Map         map
- * @property \App\Models\MapTextItem mapTextItem
- * @property \App\Models\MapItem     mapItem
+ * @mixin IdeHelperMapObject
  */
 class MapObject extends Model
 {

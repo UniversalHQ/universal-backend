@@ -9,13 +9,7 @@ use Illuminate\Database\Eloquent\Model;
  * Class MapItem
  *
  * @package App\Models
- * @mixin \Illuminate\Database\Eloquent\Builder
- * @property \App\Models\Map map
- * @property string          team_id
- * @property string          icon_type
- * @property string          flags
- * @property decimal         x
- * @property decimal         y
+ * @mixin IdeHelperMapItem
  */
 class MapItem extends Model
 {

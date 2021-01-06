@@ -9,12 +9,7 @@ use Illuminate\Database\Eloquent\Model;
  * Class MapTextItem
  *
  * @package App\Models
- * @mixin \Illuminate\Database\Eloquent\Builder
- * @property \App\Models\Map map
- * @property string          text
- * @property string          map_marker_type
- * @property string          x
- * @property string          y
+ * @mixin IdeHelperMapTextItem
  */
 class MapTextItem extends Model
 {

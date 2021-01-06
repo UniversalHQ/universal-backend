@@ -9,18 +9,11 @@ use Illuminate\Database\Eloquent\Model;
  * Class Map
  *
  * @package App\Models
- * @mixin  \Illuminate\Database\Eloquent\Builder
- * @method active
- * @property string                                   hex_name
- * @property string                                   name
- * @property int                                      region_id
- * @property string                                   report_e_tag
- * @property string                                   static_e_tag
- * @property string                                   dynamic_e_tag
- * @property string                                   dynamic_timestamp
- * @property \Illuminate\Database\Eloquent\Collection mapTextItems
- * @property \Illuminate\Database\Eloquent\Collection mapItems
- * @property \Illuminate\Database\Eloquent\Collection mapObjects
+ * @mixin IdeHelperMap
+ * @property int                                      totalEnlistments
+ * @property int                                      colonialCasualties
+ * @property int                                      wardenCasualties
+ * @property int                                      dayOfWar
  */
 class Map extends Model
 {

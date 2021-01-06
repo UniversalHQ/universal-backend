@@ -5,6 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class MapObjectUpdate
+ *
+ * @package App\Models
+ * @mixin IdeHelperMapObjectUpdate
+ */
 class MapObjectUpdate extends Model
 {
     use HasFactory;

@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
  * Class MapWarReport
  *
  * @package App\Models
- * @mixin \Illuminate\Database\Eloquent\Builder
+ * @mixin IdeHelperMapWarReport
  */
 class MapWarReport extends Model
 {
