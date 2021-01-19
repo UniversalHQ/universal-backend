@@ -31,3 +31,13 @@ Done:
 
 If you want to help, contact me on discord: Afrowner#9766
 
+SETUP:
+
+    docker build --rm -t universal_hq/backend -f x_infrastructure/docker/app/Dockerfile .
+    docker build --rm -t universal_hq/web -f x_infrastructure/docker/web/Dockerfile .
+    docker-compose up -d
+    docker exec -i wardenhq_universal-backend_1 bash < start.sh
+
+Connect to app container:
+
+    docker-compose exec universal-backend bash

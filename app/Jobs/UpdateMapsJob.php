@@ -16,8 +16,6 @@ class UpdateMapsJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    protected $hexName;
-
     /**
      * Create a new job instance.
      *
