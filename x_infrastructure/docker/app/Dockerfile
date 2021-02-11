@@ -25,12 +25,12 @@ COPY . ./
 # Finish composer
 RUN composer dump-autoload --no-scripts --no-dev --optimize
 
+# set the user for the container and alow to modify the storage files
+RUN chown -R www-data:www-data /var/www /var/www/storage
+
 # Set up the scheduler for Laravel.
 COPY x_infrastructure/docker/app/laravel-scheduler /etc/cron.d/
-
-# set the user for the container and alow to modify the storage files
-RUN chown -R www-data:www-data /var/www /var/www/storage \
-    && chmod 0644 /etc/cron.d/laravel-scheduler
+RUN chmod 0644 /etc/cron.d/laravel-scheduler
 
 # Copy the start script.
 COPY x_infrastructure/docker/app/docker-entrypoint.sh /usr/local/bin/
