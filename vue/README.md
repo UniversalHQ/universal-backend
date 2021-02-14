@@ -1,4 +1,4 @@
-# hq frontend in vue 2.X
+# Universal HQ frontend in vue 2.X
 
 ## Project setup
 ```

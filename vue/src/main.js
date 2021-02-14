@@ -4,6 +4,7 @@ import './registerServiceWorker';
 import router from './router';
 import store from './store';
 import './index.css';
+import 'leaflet/dist/leaflet.css';
 
 Vue.config.productionTip = false;
 
