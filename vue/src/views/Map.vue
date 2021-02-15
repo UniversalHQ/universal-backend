@@ -2,18 +2,17 @@
   <l-map style="height: 880px; width: 100%"
          :zoom="zoom"
          :center="center"
-         :maxZoom="5"
-         :minZoom="0.5"
          :maxBounds="maxBounds"
          :crs="crs"
          :maxBoundsViscosity="1"
          :bounceAtZoomLimits="true"
-         :options="{zoomDelta:0.5, zoomSnap:0.5, minZoom:0.5, maxZoom:5}"
+         :options="{zoomDelta:0.5, zoomSnap:0.5, minZoom:0.5, maxZoom:7.5}"
   >
     <l-tile-layer
       :url="url"
       :noWrap="noWrap"
       :bounds="bounds"
+      :options="{maxNativeZoom:5}"
     ></l-tile-layer>
     <l-image-overlay
       :url="backgroundImage"
