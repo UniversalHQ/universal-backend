@@ -32,6 +32,7 @@
     "eslint": "^6.7.2",
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-vue": "^6.2.2",
+    "json-loader": "^0.5.7",
     "vue-template-compiler": "^2.6.11"
   }
 }

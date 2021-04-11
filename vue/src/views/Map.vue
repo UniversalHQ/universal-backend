@@ -14,6 +14,12 @@
     }"
     :noWrap="noWrap"
   >
+    <l-image-overlay
+      :pane="'tilePane'"
+      :url="backgroundImage"
+      :bounds="backgroundBounds"
+    >
+    </l-image-overlay>
     <l-tile-layer
       :url="url"
       :noWrap="noWrap"
@@ -23,18 +29,32 @@
         bounds: bounds,
       }"
     ></l-tile-layer>
-    <l-image-overlay :url="backgroundImage" :bounds="backgroundBounds">
-    </l-image-overlay>
+    <l-geo-json
+      :geojson="hexes"
+      :optionsStyle="styleHexGrid"
+    >
+    </l-geo-json>
   </l-map>
 </template>
 
 <script>
 import { CRS } from 'leaflet';
-import { LMap, LTileLayer, LImageOverlay } from 'vue2-leaflet';
+import {
+  LMap,
+  LTileLayer,
+  LImageOverlay,
+  LGeoJson,
+} from 'vue2-leaflet';
+import hexes from '../hex.geojson';
 
 export default {
   name: 'Map',
-  components: { LMap, LTileLayer, LImageOverlay },
+  components: {
+    LMap,
+    LTileLayer,
+    LImageOverlay,
+    LGeoJson,
+  },
   data() {
     return {
       attribution: 'Clapfoot, Kastow, Blade, Derp',
@@ -55,17 +75,22 @@ export default {
         [0, 256],
       ],
       noWrap: true,
-      url:
-        'https://raw.githubusercontent.com/Kastow/Foxhole-Map-Tiles/master/Tiles/{z}/{z}_{x}_{y}.png',
-      zoom: 0,
+      bounds: [[-128, 0], [0, 128]],
+      maxBounds: [[90.5, 590], [-349, -320]],
+      attribution: 'Clapfoot, Kastow, Blade, Derp',
+      hexes,
     };
+  },
+  mounted() {
+  },
+  methods: {
+    styleHexGrid() {
+      return {
+        color: 'black',
+        fillColor: 'none',
+      };
+    },
   },
   mounted() {},
 };
 </script>
-
-<style>
-.leaflet-pane .leaflet-overlay-pane {
-  z-index: 100;
-}
-</style>

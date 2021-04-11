@@ -31,5 +31,13 @@ module.exports = {
       maskIcon: 'favicon.ico',
       msTileImage: 'favicon.ico'
     }
+  },
+  chainWebpack: config => {
+    config.module
+      .rule('geojson')
+      .test(/\.geojson$/)
+      .use('json-loader')
+      .loader('json-loader')
+      .end()
   }
 }
