@@ -75,10 +75,10 @@ export default {
         [0, 256],
       ],
       noWrap: true,
-      bounds: [[-128, 0], [0, 128]],
-      maxBounds: [[90.5, 590], [-349, -320]],
-      attribution: 'Clapfoot, Kastow, Blade, Derp',
       hexes,
+      url:
+        'https://raw.githubusercontent.com/Kastow/Foxhole-Map-Tiles/master/Tiles/{z}/{z}_{x}_{y}.png',
+      zoom: 1,
     };
   },
   mounted() {
@@ -91,6 +91,5 @@ export default {
       };
     },
   },
-  mounted() {},
 };
 </script>
