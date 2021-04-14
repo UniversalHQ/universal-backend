@@ -1,6 +1,6 @@
 <template>
   <l-map
-    style="height: 880px; width: 100%"
+    :style="'height: ' + this.height +'px; width: 100%'"
     :zoom="zoom"
     :center="center"
     :crs="crs"
@@ -82,6 +82,19 @@ export default {
     };
   },
   mounted() {
+  },
+  computed: {
+    height() {
+      // calculate the map height for mobile devices and large screens
+      let calculated = window.innerHeight - 84;
+      if (calculated >= 900) {
+        calculated -= 20;
+      }
+      if (calculated >= 1000) {
+        calculated -= 50;
+      }
+      return calculated;
+    },
   },
   methods: {
     styleHexGrid() {
