@@ -2,12 +2,15 @@ version: '3'
 services:
   #  The Application
   universal-backend:
-    image: universal_hq/backend
+    image: universal_hq/backend:local
+    build:
+      context: ../../../.
+      dockerfile: ./x_infrastructure/docker/app/Dockerfile
     restart: always
     working_dir: /var/www
     volumes:
-      - storagedata:/var/www/storage
-    env_file: '.env.staging'
+      - ../../../.:/var/www
+    env_file: '../../../.env'
     environment:
       - "DB_HOST=universal-db"
       - "DB_PORT=3306"
@@ -23,7 +26,10 @@ services:
 
   # The Web Server
   universal-web:
-    image: universal_hq/web
+    image: universal_hq/web:local
+    build:
+      context: ../../../.
+      dockerfile: ./x_infrastructure/docker/web/Dockerfile
     restart: always
     ports:
       - 8080:80
@@ -37,9 +43,9 @@ services:
     image: mysql:8.0.22
     restart: always
     volumes:
-      - dbdata:/var/lib/mysql
+      - universal_dbdata:/var/lib/mysql
     ports:
-      - 33061:3306
+      - 33069:3306
     environment:
       - "MYSQL_DATABASE=universal"
       - "MYSQL_USER=universal"
@@ -52,14 +58,13 @@ services:
     image: redis:6.0.5-alpine
     restart: always
     volumes:
-      - redisdata:/data
+      - universal_redisdata:/data
     networks:
       - universal-network
 
 volumes:
-  dbdata:
-  redisdata:
-  storagedata:
+  universal_dbdata:
+  universal_redisdata:
 
 networks:
   universal-network:

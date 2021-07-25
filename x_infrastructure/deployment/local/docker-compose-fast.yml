@@ -1,0 +1,71 @@
+version: '3'
+services:
+  #  The Application
+  universal-backend:
+    image: universal_hq/backend:local
+    build:
+      context: ../../../.
+      dockerfile: ./x_infrastructure/docker/app/Dockerfile
+    restart: always
+    working_dir: /var/www
+    volumes:
+      - storagedata:/var/www/storage
+    env_file: '.env.local'
+    environment:
+      - "DB_HOST=universal-db"
+      - "DB_PORT=3306"
+      - "DB_DATABASE=universal"
+      - "DB_USERNAME=universal"
+      - "DB_PASSWORD=universal"
+      - "REDIS_HOST=universal-redis"
+    depends_on:
+      - universal-db
+      - universal-redis
+    networks:
+      - universal-network
+
+  # The Web Server
+  universal-web:
+    image: universal_hq/web:local
+    build:
+      context: ../../../.
+      dockerfile: ./x_infrastructure/docker/web/Dockerfile
+    restart: always
+    ports:
+      - 8080:80
+    depends_on:
+      - universal-backend
+    networks:
+      - universal-network
+
+  # The Database
+  universal-db:
+    image: mysql:8.0.22
+    restart: always
+    volumes:
+      - dbdata:/var/lib/mysql
+    ports:
+      - 33069:3306
+    environment:
+      - "MYSQL_DATABASE=universal"
+      - "MYSQL_USER=universal"
+      - "MYSQL_PASSWORD=universal"
+      - "MYSQL_ROOT_PASSWORD=secret"
+    networks:
+      - universal-network
+  # redis
+  universal-redis:
+    image: redis:6.0.5-alpine
+    restart: always
+    volumes:
+      - redisdata:/data
+    networks:
+      - universal-network
+
+volumes:
+  dbdata:
+  redisdata:
+  storagedata:
+
+networks:
+  universal-network:

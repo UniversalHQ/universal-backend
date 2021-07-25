@@ -1,7 +1,7 @@
 
 ## About UniversalHQ
 
-This is the universal HQ for [Foxhole](https://www.foxholegame.com/) 
+This is the universal HQ Backend for [Foxhole](https://www.foxholegame.com/) 
 
 - Historized War Data
 - Live Map
@@ -9,7 +9,7 @@ This is the universal HQ for [Foxhole](https://www.foxholegame.com/)
 - Group management 
 - ... 
 
-Presented By [3SP](https://discord.gg/sZs5UZf) a german Warden Clan.
+Presented By Warden Clans.
 
 ## Development
 
@@ -32,12 +32,22 @@ Done:
 If you want to help, contact me on discord: Afrowner#9766
 
 SETUP:
+#### if you just want to use the project to develop frontend:
 
-    docker build --rm -t universal_hq/backend -f x_infrastructure/docker/app/Dockerfile .
-    docker build --rm -t universal_hq/web -f x_infrastructure/docker/web/Dockerfile .
-    docker-compose up -d
-    docker exec -i wardenhq_universal-backend_1 bash < start.sh
+    sh devFastBuild.sh
+    docker-compose -f x_infrastructure/deployment/local/docker-compose.yml exec universal-backend php artisan migrate:fresh --seed
+
+#### if you want to develop for the backend:
+
+1. `composer install`
+2. `sh devBuild.sh`
+3. setup local environment and ide helpers:
+
+
+    docker-compose -f x_infrastructure/deployment/local/docker-compose.yml exec universal-backend php artisan migrate:fresh --seed
+    docker-compose -f x_infrastructure/deployment/local/docker-compose.yml exec universal-backend php artisan ide-helper:generate
+    docker-compose -f x_infrastructure/deployment/local/docker-compose.yml exec universal-backend php artisan ide-helper:meta
 
 Connect to app container:
 
-    docker-compose exec universal-backend bash
+    docker-compose -f x_infrastructure/deployment/local/docker-compose.yml exec universal-backend bash

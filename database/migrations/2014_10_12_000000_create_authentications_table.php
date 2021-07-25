@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUsersTable extends Migration
+class CreateAuthenticationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,14 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('authentications', function (Blueprint $table) {
             $table->id();
-            $table->string('username');
-            $table->string('discriminator');
-            $table->unsignedBigInteger('discord_id');
-            $table->string('discord_avatar_id');
-            $table->string('discord_banner_id');
-            $table->string('locale');
-            $table->rememberToken();
+            $table->integer('user_id')->index();
+            $table->string('type');
+            $table->string('access_token');
+            $table->string('refresh_token');
+            $table->integer('expires_in');
+            $table->string('scope');
             $table->timestamps();
         });
     }

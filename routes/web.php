@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DiscordController;
 use App\Http\Controllers\WarOverviewController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,3 +19,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/current-war', WarOverviewController::class)->name('war_Overview.show');
+
+Route::get('/discord-login', [DiscordController::class,'redirectToDiscord']);
+Route::get('/discord-callback', [DiscordController::class,'callbackFromDiscord']);
