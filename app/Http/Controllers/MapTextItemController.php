@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\MapTextItemResource;
 use App\Models\MapTextItem;
 use Illuminate\Http\Request;
-use App\Http\Controllers\MapTextItemResource;
 
 class MapTextItemController extends Controller
 {
