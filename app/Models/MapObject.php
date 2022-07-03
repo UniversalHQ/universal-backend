@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\ObjectType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -28,6 +29,31 @@ class MapObject extends Model
         'x',
         'y',
     ];
+
+    protected $casts = [
+        'object_type' => ObjectType::class,
+    ];
+
+    protected static function boot()
+    {
+        static::created(function (MapObject $mapObject) {
+            $updatedData = array_merge($mapObject->getAttributes(), [
+                'map_object_id'     => $mapObject->id,
+                'dynamic_timestamp' => $mapObject->map->dynamic_timestamp,
+            ]);
+            MapObjectUpdate::create($updatedData);
+        });
+
+        static::updated(function (MapObject $mapObject) {
+            $updatedData = array_merge($mapObject->getChanges(), [
+                'map_object_id'     => $mapObject->id,
+                'dynamic_timestamp' => $mapObject->map->dynamic_timestamp,
+            ]);
+            MapObjectUpdate::create($updatedData);
+        });
+
+        parent::boot();
+    }
 
     public function map()
     {

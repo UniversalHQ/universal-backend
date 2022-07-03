@@ -46,7 +46,7 @@ class AuthenticationService
         $state = $this->generateState();
 
         $parameters = http_build_query([
-            'client_id'     => '855895920055156778',
+            'client_id'     => config('services.discord.clientId'),
             'state'         => $state,
             'response_type' => 'code',
             'scope'         => 'identify guilds',
@@ -61,13 +61,13 @@ class AuthenticationService
     public function loadOAuthAccessFromCode(string $code)
     {
         $body = [
-            'client_id'     => env('DISCORD_CLIENT_ID'),
-            'client_secret' => env('DISCORD_CLIENT_SECRET'),
+            'client_id'     => config('services.discord.clientId'),
+            'client_secret' => config('services.discord.secret'),
             'grant_type'    => 'authorization_code',
             'code'          => $code,
             'redirect_uri'  => config('app.url') . '/discord-callback',
         ];
-        $response = Http::asForm()->post('https://discord.com/api/oauth2/token', $body);
+        $response = Http::asForm()->post(config('services.discord.url') . '/oauth2/token', $body);
         $response = $response->json();
         $this->accessToken = $response['access_token'];
         $this->refreshToken = $response['refresh_token'];
@@ -78,7 +78,7 @@ class AuthenticationService
     public function getUserFromOAuthAccess(): User
     {
         $response = Http::withHeaders(['Authorization' => 'Bearer ' . $this->accessToken])
-                        ->get('https://discord.com/api/v9/users/@me');
+                        ->get(config('services.discord.url') . '/v9/users/@me');
         $response = $response->json();
         /** @var User $user */
         $user = User::updateOrCreate([
@@ -108,7 +108,7 @@ class AuthenticationService
     public function syncUserGuilds()
     {
         $response = Http::withHeaders(['Authorization' => 'Bearer ' . $this->accessToken])
-                        ->get('https://discord.com/api/v9/users/@me/guilds');
+                        ->get(config('services.discord.url') . '/v9/users/@me/guilds');
 
         $guildData = collect($response->json());
         /** @var User $user */

@@ -15,7 +15,7 @@ class CreateMapItemsTable extends Migration
     {
         Schema::create('map_items', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('map_id');
+            $table->foreignIdFor(\App\Models\Map::class);
             $table->unsignedBigInteger('map_object_id')->nullable();
 
             $table->string('team_id');

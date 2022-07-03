@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Jobs\UpdateMapsJob;
+use App\WarApi\WarApiService;
 use Illuminate\Console\Command;
 
 class UpdateMapsCommand extends Command
@@ -36,8 +36,8 @@ class UpdateMapsCommand extends Command
      *
      * @return void
      */
-    public function handle()
+    public function handle(WarApiService $warApiService)
     {
-        UpdateMapsJob::dispatchNow();
+        $warApiService->updateMaps();
     }
 }

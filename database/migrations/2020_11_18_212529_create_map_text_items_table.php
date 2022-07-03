@@ -15,8 +15,7 @@ class CreateMapTextItemsTable extends Migration
     {
         Schema::create('map_text_items', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('map_id');
-            $table->unsignedBigInteger('map_object_id')->nullable();
+            $table->foreignIdFor(\App\Models\Map::class);
 
             $table->string('text');
             $table->string('map_marker_type');

@@ -2,6 +2,8 @@
 
 namespace App\Jobs;
 
+use App\Models\Map;
+use App\Models\War;
 use App\WarApi\WarApiService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -10,14 +12,14 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Http;
 
-class UpdateStaticMapDataJob implements ShouldQueue
+class UpdateWarReportForMapJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
      * Create a new job instance.
      *
-     * @param $hexName
+     * @param string $hexName
      */
     public function __construct(protected string $hexName)
     {
@@ -30,6 +32,6 @@ class UpdateStaticMapDataJob implements ShouldQueue
      */
     public function handle(WarApiService $warApiService)
     {
-        $warApiService->updateStaticMapData($this->hexName);
+        $warApiService->updateWarReportForMap($this->hexName);
     }
 }

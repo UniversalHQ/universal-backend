@@ -221,5 +221,131 @@ class MapSeeder extends Seeder
             'dynamic_e_tag'     => '"0"',
             'dynamic_timestamp' => '0',
         ]);
+        Map::create([
+            'hex_name'          => 'NevishLineHex',
+            'name'              => 'Nevish Line',
+            'region_id'         => 29,
+            'report_e_tag'      => '"0"',
+            'static_e_tag'      => '"0"',
+            'dynamic_e_tag'     => '"0"',
+            'dynamic_timestamp' => '0',
+        ]);
+        Map::create([
+            'hex_name'          => 'AcrithiaHex',
+            'name'              => 'Acrithia',
+            'region_id'         => 30,
+            'report_e_tag'      => '"0"',
+            'static_e_tag'      => '"0"',
+            'dynamic_e_tag'     => '"0"',
+            'dynamic_timestamp' => '0',
+        ]);
+        Map::create([
+            'hex_name'          => 'RedRiverHex',
+            'name'              => 'Red River',
+            'region_id'         => 31,
+            'report_e_tag'      => '"0"',
+            'static_e_tag'      => '"0"',
+            'dynamic_e_tag'     => '"0"',
+            'dynamic_timestamp' => '0',
+        ]);
+        Map::create([
+            'hex_name'          => 'CallumsCapeHex',
+            'name'              => 'Callums Cape',
+            'region_id'         => 32,
+            'report_e_tag'      => '"0"',
+            'static_e_tag'      => '"0"',
+            'dynamic_e_tag'     => '"0"',
+            'dynamic_timestamp' => '0',
+        ]);
+        Map::create([
+            'hex_name'          => 'SpeakingWoodsHex',
+            'name'              => 'Speaking Woods',
+            'region_id'         => 33,
+            'report_e_tag'      => '"0"',
+            'static_e_tag'      => '"0"',
+            'dynamic_e_tag'     => '"0"',
+            'dynamic_timestamp' => '0',
+        ]);
+        Map::create([
+            'hex_name'          => 'BasinSionnachHex',
+            'name'              => 'Basin Sionnach',
+            'region_id'         => 34,
+            'report_e_tag'      => '"0"',
+            'static_e_tag'      => '"0"',
+            'dynamic_e_tag'     => '"0"',
+            'dynamic_timestamp' => '0',
+        ]);
+        Map::create([
+            'hex_name'          => 'HowlCountyHex',
+            'name'              => 'Howl County',
+            'region_id'         => 35,
+            'report_e_tag'      => '"0"',
+            'static_e_tag'      => '"0"',
+            'dynamic_e_tag'     => '"0"',
+            'dynamic_timestamp' => '0',
+        ]);
+        Map::create([
+            'hex_name'          => 'ClansheadValleyHex',
+            'name'              => 'Clanshead Valley',
+            'region_id'         => 36,
+            'report_e_tag'      => '"0"',
+            'static_e_tag'      => '"0"',
+            'dynamic_e_tag'     => '"0"',
+            'dynamic_timestamp' => '0',
+        ]);
+        Map::create([
+            'hex_name'          => 'MorgensCrossingHex',
+            'name'              => 'Morgens Crossing',
+            'region_id'         => 37,
+            'report_e_tag'      => '"0"',
+            'static_e_tag'      => '"0"',
+            'dynamic_e_tag'     => '"0"',
+            'dynamic_timestamp' => '0',
+        ]);
+        Map::create([
+            'hex_name'          => 'TheFingersHex',
+            'name'              => 'The Fingers',
+            'region_id'         => 38,
+            'report_e_tag'      => '"0"',
+            'static_e_tag'      => '"0"',
+            'dynamic_e_tag'     => '"0"',
+            'dynamic_timestamp' => '0',
+        ]);
+        Map::create([
+            'hex_name'          => 'TerminusHex',
+            'name'              => 'Terminus',
+            'region_id'         => 39,
+            'report_e_tag'      => '"0"',
+            'static_e_tag'      => '"0"',
+            'dynamic_e_tag'     => '"0"',
+            'dynamic_timestamp' => '0',
+        ]);
+        Map::create([
+            'hex_name'          => 'KalokaiHex',
+            'name'              => 'Kalokai',
+            'region_id'         => 40,
+            'report_e_tag'      => '"0"',
+            'static_e_tag'      => '"0"',
+            'dynamic_e_tag'     => '"0"',
+            'dynamic_timestamp' => '0',
+        ]);
+        Map::create([
+            'hex_name'          => 'AshFieldsHex',
+            'name'              => 'Ash Fields',
+            'region_id'         => 41,
+            'report_e_tag'      => '"0"',
+            'static_e_tag'      => '"0"',
+            'dynamic_e_tag'     => '"0"',
+            'dynamic_timestamp' => '0',
+        ]);
+        Map::create([
+            'hex_name'          => 'OriginHex',
+            'name'              => 'Origin',
+            'region_id'         => 42,
+            'report_e_tag'      => '"0"',
+            'static_e_tag'      => '"0"',
+            'dynamic_e_tag'     => '"0"',
+            'dynamic_timestamp' => '0',
+        ]);
     }
 }
