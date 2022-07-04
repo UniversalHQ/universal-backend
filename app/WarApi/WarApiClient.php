@@ -45,7 +45,6 @@ class WarApiClient
         $response = $this->getWithETag('/maps/' . $map->hex_name . '/dynamic/public', $map->dynamic_e_tag);
 
         if ($response->status() === 304) {
-            logger()->info($map->name . ' dynamic data has not been updated');
 
             return null;
         }
@@ -63,7 +62,6 @@ class WarApiClient
         $response = $this->getWithETag('/maps/' . $map->hex_name . '/static', $map->static_e_tag);
 
         if ($response->status() === 304) {
-            logger()->info($map->name . ' static data has not been updated');
 
             return null;
         }

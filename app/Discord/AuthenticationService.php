@@ -78,8 +78,10 @@ class AuthenticationService
     public function getUserFromOAuthAccess(): User
     {
         $response = Http::withHeaders(['Authorization' => 'Bearer ' . $this->accessToken])
-                        ->get(config('services.discord.url') . '/v9/users/@me');
+            ->get(config('services.discord.url') . '/v9/users/@me');
+        dump($response->headers());
         $response = $response->json();
+
         /** @var User $user */
         $user = User::updateOrCreate([
             'discord_id' => $response['id'],
@@ -107,10 +109,13 @@ class AuthenticationService
 
     public function syncUserGuilds()
     {
+        usleep(1000000);
         $response = Http::withHeaders(['Authorization' => 'Bearer ' . $this->accessToken])
-                        ->get(config('services.discord.url') . '/v9/users/@me/guilds');
+            ->get(config('services.discord.url') . '/v9/users/@me/guilds');
 
         $guildData = collect($response->json());
+        dump($guildData);
+        dump($response->headers());
         /** @var User $user */
         $user = User::find($this->userId);
         $guildData->each(function ($entry) use ($user) {
@@ -122,7 +127,6 @@ class AuthenticationService
             ]);
             $user->guilds()->attach($guild, ['owner' => $entry['owner']]);
         });
-
     }
 
     private function generateState(): string

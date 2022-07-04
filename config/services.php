@@ -34,7 +34,7 @@ return [
         'url' => env('WAR_API_URL'),
     ],
     'discord' => [
-        'url'      => env('DISCORD__API_URL'),
+        'url'      => env('DISCORD_API_URL'),
         'clientId' => env('DISCORD_CLIENT_ID'),
         'secret'   => env('DISCORD_CLIENT_SECRET'),
     ],

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\MapObjectController;
 use App\Http\Controllers\MapTextItemController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -19,6 +20,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::get('user/me',[UserController::class,'getMe'])->middleware('auth:sanctum');
 
 Route::get('mapObjects', [MapObjectController::class, 'indexMapObject']);
 Route::get('mapObjects/{mapObject}', [MapObjectController::class, 'showMapObject']);

@@ -76,7 +76,6 @@ class UpdateMapObjectsJob implements ShouldQueue
                     'is_victory_base' => $mapItem->flags & self::IS_VICTORY_BASE,
                     'is_build_site'   => $mapItem->flags & self::IS_BUILD_SITE,
                 ]);
-                logger()->info('MapObject #' . $mapObject->id . ' has been updated', $mapObject->getChanges());
             }
         });
     }

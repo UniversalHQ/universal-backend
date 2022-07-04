@@ -26,6 +26,6 @@ class DiscordController extends Controller
         $user->tokens()->delete();
         $token = $user->createToken('api_token');
 
-        return redirect(config('app.url_frontend') . '/?token=' . $token->plainTextToken);
+        return redirect(config('app.url_frontend') . '/login/' . $token->plainTextToken);
     }
 }

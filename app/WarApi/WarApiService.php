@@ -46,7 +46,6 @@ class WarApiService
                 $war->active_tiles_string = implode($mapsArray);
             }
             $war->save();
-            logger()->info('War State changed. Active GameTiles have been updated.');
             if ($war->wasRecentlyCreated) {
                 MapItem::query()->delete();
                 MapTextItem::query()->delete();
