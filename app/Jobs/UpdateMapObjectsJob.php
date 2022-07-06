@@ -8,6 +8,8 @@ use App\Models\MapObject;
 use App\Models\MapTextItem;
 use App\Models\War;
 use App\ObjectType;
+use App\Services\Map\Points\WarApiPoint;
+use App\Services\Map\RegionHex;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Database\Eloquent\Collection;
@@ -87,12 +89,15 @@ class UpdateMapObjectsJob implements ShouldQueue
     {
         $mapItems->each(function (MapItem $mapItem) {
             $matchingTextItem = $this->findClosestMapTextItem($mapItem);
+            $leafletPoint = (new WarApiPoint($mapItem->y, $mapItem->x, RegionHex::from($mapItem->map->region_id)))->getLeafletPoint();
 
             $mapObject = MapObject::create([
                 'map_id'          => $mapItem->map_id,
                 'war_id'          => $this->war->id,
                 'x'               => $mapItem->x,
                 'y'               => $mapItem->y,
+                'lat'             => $leafletPoint->y,
+                'lng'             => $leafletPoint->x,
                 'text'            => $matchingTextItem->text,
                 'team_id'         => $mapItem->team_id,
                 'icon_type'       => $mapItem->icon_type,

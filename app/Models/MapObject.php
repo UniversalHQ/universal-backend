@@ -28,6 +28,8 @@ class MapObject extends Model
         'is_build_site',
         'x',
         'y',
+        'lat',
+        'lng',
     ];
 
     protected $casts = [

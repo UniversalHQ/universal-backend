@@ -22,6 +22,8 @@ class MapItem extends Model
         'flags',
         'x',
         'y',
+        'lat',
+        'lng',
     ];
 
     public function map()

@@ -30,6 +30,8 @@ class CreateMapObjectsTable extends Migration
 
             $table->decimal('x', 12, 10);
             $table->decimal('y', 12, 10);
+            $table->decimal('lat',13,10);
+            $table->decimal('lng',13,10);
 
             $table->timestamps();
         });

@@ -8,6 +8,8 @@ use App\Models\Map;
 use App\Models\MapItem;
 use App\Models\MapTextItem;
 use App\Models\War;
+use App\Services\Map\Points\WarApiPoint;
+use App\Services\Map\RegionHex;
 use Illuminate\Support\Carbon;
 
 class WarApiService
@@ -100,10 +102,10 @@ class WarApiService
             return false;
         }
         if (isset($result['mapTextItems'])) {
-            $this->updateMapTextItems($result['mapTextItems'], $map->id);
+            $this->updateMapTextItems($result['mapTextItems'], $map);
         }
         if (isset($result['mapItems'])) {
-            $this->updateMapItems($result['mapItems'], $map->id);
+            $this->updateMapItems($result['mapItems'], $map);
         }
 
         return true;
@@ -120,10 +122,10 @@ class WarApiService
         }
 
         if (isset($result['mapTextItems'])) {
-            $this->updateMapTextItems($result['mapTextItems'], $map->id);
+            $this->updateMapTextItems($result['mapTextItems'], $map);
         }
         if (isset($result['mapItems'])) {
-            $this->updateMapItems($result['mapItems'], $map->id);
+            $this->updateMapItems($result['mapItems'], $map);
         }
 
         return true;
@@ -131,31 +133,38 @@ class WarApiService
 
     /**
      * @param $mapTextItems
-     * @param $mapId
+     * @param $map
      * @return void
      */
-    private function updateMapTextItems($mapTextItems, $mapId): void
+    private function updateMapTextItems(array $mapTextItems, Map $map): void
     {
         foreach ($mapTextItems as $mapTextItem) {
+            $leafletPoint = (new WarApiPoint($mapTextItem['y'], $mapTextItem['x'], RegionHex::from($map->region_id)))->getLeafletPoint();
             MapTextItem::updateOrCreate([
-                'map_id' => $mapId,
+                'map_id' => $map->id,
                 'x'      => $mapTextItem['x'],
                 'y'      => $mapTextItem['y'],
             ], [
+                'lat'             => $leafletPoint->y,
+                'lng'             => $leafletPoint->x,
                 'text'            => $mapTextItem['text'],
                 'map_marker_type' => $mapTextItem['mapMarkerType'],
             ]);
         }
     }
 
-    private function updateMapItems(mixed $mapItems, mixed $mapId): void
+    private function updateMapItems(array $mapItems, Map $map): void
     {
         foreach ($mapItems as $mapItem) {
+            $leafletPoint = (new WarApiPoint($mapItem['y'], $mapItem['x'], RegionHex::from($map->region_id)))->getLeafletPoint();
+
             MapItem::updateOrCreate([
-                'map_id' => $mapId,
+                'map_id' => $map->id,
                 'x'      => $mapItem['x'],
                 'y'      => $mapItem['y'],
             ], [
+                'lat'       => $leafletPoint->y,
+                'lng'       => $leafletPoint->x,
                 'team_id'   => $mapItem['teamId'],
                 'icon_type' => $mapItem['iconType'],
                 'flags'     => $mapItem['flags'],

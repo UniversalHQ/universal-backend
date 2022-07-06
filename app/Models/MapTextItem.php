@@ -21,6 +21,8 @@ class MapTextItem extends Model
         'map_marker_type',
         'x',
         'y',
+        'lat',
+        'lng',
     ];
 
     public function map()
