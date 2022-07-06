@@ -25,7 +25,13 @@ class WarApiPoint extends AbstractPoint
     public function getLeafletPoint()
     {
         $center = new RegionCenterPoint($this->regionHex);
+
+        $upperLeftCorner = new LeafletPoint($center->y - $center->regionHight / 2, $center->x - $center->regionWidth / 2);
+
         // very wrong but at least in the right hex:
-        return new LeafletPoint($center->y + $this->y * 10, $center->x + $this->x * 10);
+        return new LeafletPoint(
+            $upperLeftCorner->y + $this->y * $center->regionHight,
+            $upperLeftCorner->x + $this->x * $center->regionWidth
+        );
     }
 }
