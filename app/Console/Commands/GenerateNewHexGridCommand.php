@@ -47,10 +47,10 @@ class GenerateNewHexGridCommand extends Command
         foreach (RegionHex::cases() as $regionHex) {
             $regionCenterPoint = new RegionCenterPoint($regionHex);;
 
-            $coords = [];
+            $cornerPoints = [];
             /** @var \App\Services\Map\Points\LeafletPoint $leafletPoint */
             foreach ($regionCenterPoint->getRegionCornerPoints() as $leafletPoint) {
-                $coords[] = $leafletPoint->toArray();
+                $cornerPoints[] = $leafletPoint->toPointArray();
             }
             $feature = [
                 "type"       => "Feature",
@@ -60,7 +60,7 @@ class GenerateNewHexGridCommand extends Command
                 "geometry"   => [
                     "type"        => "Polygon",
                     "coordinates" => [
-                        $coords
+                        $cornerPoints
                     ]
                 ]
             ];

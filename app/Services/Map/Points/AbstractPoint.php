@@ -45,8 +45,13 @@ abstract class AbstractPoint
         }
     }
 
-    public function toArray(): array
+    public function toPointArray(): array
     {
         return [$this->x, $this->y];
+    }
+
+    public function toCoordinatesArray(): array
+    {
+        return [$this->y, $this->x];
     }
 }

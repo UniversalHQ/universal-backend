@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\MapObjectController;
+use App\Http\Controllers\MapRegionController;
 use App\Http\Controllers\MapTextItemController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -22,6 +23,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 Route::get('user/me',[UserController::class,'getMe'])->middleware('auth:sanctum');
 
+Route::get('regions',[MapRegionController::class, 'indexMap']);
 Route::get('mapObjects', [MapObjectController::class, 'indexMapObject']);
 Route::get('mapObjects/{mapObject}', [MapObjectController::class, 'showMapObject']);
 Route::get('mapTextItem', [MapTextItemController::class, 'indexMapTextItem']);
