@@ -14,6 +14,9 @@ class MapTextItemController extends Controller
         if ($map = $request->get('map')) {
             $query->where('map_id', $map);
         }
+        if ($mapMarkerType = $request->get('mapMarkerType')) {
+            $query->where('map_marker_type', $mapMarkerType);
+        }
 
         return MapTextItemResource::collection($query->get());
     }

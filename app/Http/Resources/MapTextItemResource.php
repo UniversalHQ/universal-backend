@@ -2,18 +2,16 @@
 
 namespace App\Http\Resources;
 
-class MapTextItemResource extends Resource
+use Illuminate\Http\Resources\Json\JsonResource;
+
+class MapTextItemResource extends JsonResource
 {
 
-    public function data($request): array
+    public function toArray($request): array
     {
         return [
-            'map_id'          => $this->map_id,
-            'map_object_id'   => $this->map_object_id,
             'text'            => $this->text,
             'map_marker_type' => $this->map_marker_type,
-            'x'               => $this->x,
-            'y'               => $this->y,
             'lat'             => $this->lat,
             'lng'             => $this->lng,
         ];
