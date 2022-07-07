@@ -14,3 +14,4 @@ yarn-error.log
 /schedule.log
 /supervisord.log
 /supervisord.pid
+/.phpstorm.meta.php
