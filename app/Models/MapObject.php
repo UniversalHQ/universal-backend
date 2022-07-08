@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @package App\Models
  * @mixin IdeHelperMapObject
+ * @property string assetUrl
  */
 class MapObject extends Model
 {
@@ -70,5 +71,11 @@ class MapObject extends Model
     public function mapItem()
     {
         return $this->hasOne(MapItem::class);
+    }
+
+    public function getAssetUrlAttribute()
+    {
+        $assetName = ObjectType::getAssetName($this->object_type);
+        return 'https://assets.foxhole.tools/icons/map/' . $assetName . '.png';
     }
 }

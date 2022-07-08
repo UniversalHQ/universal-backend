@@ -85,8 +85,9 @@ enum ObjectType: int
                 self::SULFUR_MINE,
                 self::SALVAGE_MINE,
                 self::OIL_WELL,
+                self::COMPONENT_MINE,
             ],
-            'other' => [
+            'strategic' => [
                 self::SPECIAL_BASE,
                 self::OBSERVATION_TOWER,
                 self::ROCKET_SITE,
@@ -94,6 +95,49 @@ enum ObjectType: int
                 self::STORM_CANNON,
                 self::INTEL_CENTER,
             ]
+        };
+    }
+
+    public static function getAssetName(ObjectType $objectType)
+    {
+        return match ($objectType) {
+            // bases
+            self::TOWN_BASE_ONE => 'townbasetier1',
+            self::TOWN_BASE_TWO => 'townbasetier2',
+            self::TOWN_BASE_THREE => 'townbasetier2',
+            self::RELIC_BASE_ONE => 'relicbase',
+            self::RELIC_BASE_TWO => 'relicbase',
+            self::RELIC_BASE_THREE => 'relicbase',
+            self::GARRISON_STATION => 'safehouse',
+
+            // industry
+            self::HOSPITAL => 'hospital',
+            self::VEHICLE_FACTORY => 'vehicle',
+            self::REFINERY => 'manufacturing',
+            self::SHIPYARD => 'shipyard',
+            self::ENGINEERING_CENTER => 'techcenter',
+            self::STORAGE_FACILITY => 'storagefacility',
+            self::FACTORY => 'factory',
+            self::CONSTRUCTION_YARD => 'constructionyard',
+            self::MASS_PRODUCTION_FACTORY => 'massproductionfactory',
+            self::SEAPORT => 'seaport',
+
+            // resources
+            self::SALVAGE_FIELD => 'salvage',
+            self::COMPONENT_FIELD => 'components',
+            self::SULFUR_FIELD => 'sulfur',
+            self::SULFUR_MINE => 'sulfurmine',
+            self::SALVAGE_MINE => 'scrapmine',
+            self::OIL_WELL => 'fuel',
+            self::COMPONENT_MINE => 'componentmine',
+
+            // strategic
+            self::SPECIAL_BASE => 'skeep',
+            self::OBSERVATION_TOWER => 'observationtower',
+            self::ROCKET_SITE => 'rocketfacility',
+            self::COASTAL_GUN => 'coastalgun',
+            self::STORM_CANNON => 'stormcannon',
+            self::INTEL_CENTER => 'intelcenter',
         };
     }
 }
