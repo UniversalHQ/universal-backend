@@ -104,7 +104,7 @@ enum ObjectType: int
             // bases
             self::TOWN_BASE_ONE => 'townbasetier1',
             self::TOWN_BASE_TWO => 'townbasetier2',
-            self::TOWN_BASE_THREE => 'townbasetier2',
+            self::TOWN_BASE_THREE => 'townbasetier3',
             self::RELIC_BASE_ONE => 'relicbase',
             self::RELIC_BASE_TWO => 'relicbase',
             self::RELIC_BASE_THREE => 'relicbase',

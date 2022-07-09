@@ -76,6 +76,12 @@ class MapObject extends Model
     public function getAssetUrlAttribute()
     {
         $assetName = ObjectType::getAssetName($this->object_type);
+        if($this->is_victory_base){
+            $assetName = 'civiccenter';
+        }
+        if($this->is_scorched){
+            $assetName = 'scorchedtown';
+        }
         return 'https://assets.foxhole.tools/icons/map/' . $assetName . '.png';
     }
 }

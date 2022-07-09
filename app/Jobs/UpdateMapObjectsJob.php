@@ -21,11 +21,6 @@ class UpdateMapObjectsJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    const     IS_VICTORY_BASE = '1';
-    const     IS_BUILD_SITE = '4';
-    const     IS_SCORCHED = '10';
-    const     IS_TOWN_CLAIMED = '20';
-
     /**
      * @var \App\Models\Map
      */
@@ -66,17 +61,17 @@ class UpdateMapObjectsJob implements ShouldQueue
             if (
                 $mapItem->team_id != $mapObject->team_id ||//Town Owner Changed
                 $mapItem->icon_type != $mapObject->icon_type ||//Town Level changed
-                ($mapItem->flags & self::IS_BUILD_SITE) != $mapObject->is_build_site ||//Object build status changed
-                ($mapItem->flags & self::IS_VICTORY_BASE) != $mapObject->is_victory_base ||//shouldn`t change...
-                ($mapItem->flags & self::IS_SCORCHED) != $mapObject->is_scorched//Got hit by a rocket :D
+                $mapItem->isVictoryBase() !== $mapObject->is_victory_base ||//shouldn`t change...
+                $mapItem->isBuildSite() !== $mapObject->is_build_site ||//Object build status changed
+                $mapItem->isScorched() !== $mapObject->is_scorched//Got hit by a rocket :D
             ) {
                 $mapObject->update([
                     'team_id'         => $mapItem->team_id,
                     'icon_type'       => $mapItem->icon_type,
                     'object_type'     => ObjectType::from($mapItem->icon_type),
-                    'is_scorched'     => $mapItem->flags & self::IS_SCORCHED,
-                    'is_victory_base' => $mapItem->flags & self::IS_VICTORY_BASE,
-                    'is_build_site'   => $mapItem->flags & self::IS_BUILD_SITE,
+                    'is_victory_base' => $mapItem->isVictoryBase(),
+                    'is_build_site'   => $mapItem->isBuildSite(),
+                    'is_scorched'     => $mapItem->isScorched(),
                 ]);
             }
         });
@@ -102,9 +97,9 @@ class UpdateMapObjectsJob implements ShouldQueue
                 'team_id'         => $mapItem->team_id,
                 'icon_type'       => $mapItem->icon_type,
                 'object_type'     => ObjectType::from($mapItem->icon_type),
-                'is_scorched'     => $mapItem->flags & self::IS_SCORCHED,
-                'is_victory_base' => $mapItem->flags & self::IS_VICTORY_BASE,
-                'is_build_site'   => $mapItem->flags & self::IS_BUILD_SITE,
+                'is_victory_base' => $mapItem->isVictoryBase(),
+                'is_build_site'   => $mapItem->isBuildSite(),
+                'is_scorched'     => $mapItem->isScorched(),
             ]);
             $mapItem->mapObject()->associate($mapObject)->save();
         });
