@@ -18,8 +18,6 @@
                 <th>wardenCasualties</th>
                 <th>dayOfWar</th>
                 <th>version</th>
-                <th>deleted_at</th>
-                <th>created_at</th>
                 <th>updated_at</th>
             </thead>
             <tbody>
@@ -32,8 +30,6 @@
                     <td>{{$map->wardenCasualties}}</td>
                     <td>{{$map->dayOfWar}}</td>
                     <td>{{$map->version}}</td>
-                    <td>{{$map->warReport->deleted_at}}</td>
-                    <td>{{$map->created_at}}</td>
                     <td>{{$map->warReport->updated_at}}</td>
                 </tr>
             @endforeach
@@ -42,21 +38,21 @@
     </div>
 
     <div>
-        @foreach($maps as $map)
-            <p>Map: {{ $map->name }}</p>
-            <table>
-                <tbody>
-                @foreach($mapObjects as $mapObject)
-                    @if($mapObject->map->id == $map->id)
-                        <tr>
-                            <td>{{$mapObject->text}}</td>
-                            <td>{{$mapObject->object_type}}</td>
-                            <td>{{$mapObject->team_id}}</td>
-                        </tr>
-                    @endif
-                @endforeach
-                </tbody>
-            </table>
-        @endforeach
+{{--        @foreach($maps as $map)--}}
+{{--            <p>Map: {{ $map->name }}</p>--}}
+{{--            <table>--}}
+{{--                <tbody>--}}
+{{--                @foreach($mapObjects as $mapObject)--}}
+{{--                    @if($mapObject->map->id == $map->id)--}}
+{{--                        <tr>--}}
+{{--                            <td>{{$mapObject->text}}</td>--}}
+{{--                            <td>{{$mapObject->object_type->name}}</td>--}}
+{{--                            <td>{{$mapObject->team_id}}</td>--}}
+{{--                        </tr>--}}
+{{--                    @endif--}}
+{{--                @endforeach--}}
+{{--                </tbody>--}}
+{{--            </table>--}}
+{{--        @endforeach--}}
     </div>
 @endsection

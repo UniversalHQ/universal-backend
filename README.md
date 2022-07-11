@@ -19,15 +19,17 @@ This is a PHP Laravel Project. The frontend will be done in VueJs / Livewire / I
 
 * The foxhole API is integrated and WarReports are saved historically.
 
-ToDo: 
-* Add frontend map view.
+ToDo:
+* Save custom map objects.
+* Save custom map drawings
 * Add User management.
-* Add interaction on the map.
-* Save map states.
+* add items/crates/storage DataModel
+* improve war api client with cach max-age flag
 
 Done:
 * Integrate Foxhole API
 * Historize MapData
+* Add websocket functions
 
 If you want to help, contact me on discord: Afrowner#9766
 
