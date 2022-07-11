@@ -82,6 +82,9 @@ class WarApiService
         $map = Map::where('hex_name', $hexName)->first();
 
         $reportData = $this->warApiClient->getWarReportForMap($map);
+        if (is_null($reportData)) {
+            return;
+        }
 
         War::getCurrentWar()->mapWarReports()->create(
             array_merge([

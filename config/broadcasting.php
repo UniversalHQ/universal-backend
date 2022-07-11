@@ -36,7 +36,8 @@ return [
             'secret' => env('PUSHER_APP_SECRET'),
             'app_id' => env('PUSHER_APP_ID'),
             'options' => [
-                'encrypted' => true,
+                'useTLS' => env('BROADCAST_ENCRYPTED'),
+                'encrypted' => env('BROADCAST_ENCRYPTED'),
                 'host' => '127.0.0.1',
                 'port' => 6001,
                 'scheme' => 'http'

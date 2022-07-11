@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use App\Events\MapObjectUpdatedEvent;
 use App\ObjectType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Class MapObject
@@ -34,25 +36,25 @@ class MapObject extends Model
     ];
 
     protected $casts = [
-        'object_type' => ObjectType::class,
+        'object_type'     => ObjectType::class,
+        'is_scorched'     => 'boolean',
+        'is_victory_base' => 'boolean',
+        'is_build_site'   => 'boolean',
     ];
 
     protected static function boot()
     {
-        static::created(function (MapObject $mapObject) {
-            $updatedData = array_merge($mapObject->getAttributes(), [
-                'map_object_id'     => $mapObject->id,
-                'dynamic_timestamp' => $mapObject->map->dynamic_timestamp,
-            ]);
-            MapObjectUpdate::create($updatedData);
-        });
-
-        static::updated(function (MapObject $mapObject) {
+        static::saved(function (MapObject $mapObject) {
+            if (empty($mapObject->getChanges())) {
+                return;
+            }
+            Log::warning('"changes"', $mapObject->getChanges());
             $updatedData = array_merge($mapObject->getChanges(), [
                 'map_object_id'     => $mapObject->id,
                 'dynamic_timestamp' => $mapObject->map->dynamic_timestamp,
             ]);
             MapObjectUpdate::create($updatedData);
+            event(new MapObjectUpdatedEvent($mapObject));
         });
 
         parent::boot();
@@ -76,12 +78,38 @@ class MapObject extends Model
     public function getAssetUrlAttribute()
     {
         $assetName = ObjectType::getAssetName($this->object_type);
-        if($this->is_victory_base){
+        if ($this->is_victory_base) {
             $assetName = 'civiccenter';
         }
-        if($this->is_scorched){
+        if ($this->is_scorched) {
             $assetName = 'scorchedtown';
         }
+
         return 'https://assets.foxhole.tools/icons/map/' . $assetName . '.png';
+    }
+
+    public function getCategoryAttribute()
+    {
+        return ObjectType::categoryForCase($this->object_type);
+    }
+
+    public function getStylingAttribute()
+    {
+        $styling = $this->team_id;
+
+        if ($this->object_type === 'SALVAGE_FIELD' || $this->object_type === 'SALVAGE_MINE') {
+            $styling = 'SCRAP';
+        }
+        if ($this->object_type === 'COMPONENT_FIELD' || $this->object_type === 'COMPONENT_MINE') {
+            $styling = 'COMPONENT';
+        }
+        if ($this->object_type === 'SULFUR_FIELD' || $this->object_type === 'SULFUR_MINE') {
+            $styling = 'SULFUR';
+        }
+        if ($this->object_type === 'OIL_WELL') {
+            $styling = 'OIL';
+        }
+
+        return $styling;
     }
 }

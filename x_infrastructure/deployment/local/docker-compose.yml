@@ -18,6 +18,8 @@ services:
       - "DB_USERNAME=universal"
       - "DB_PASSWORD=universal"
       - "REDIS_HOST=universal-redis"
+    ports:
+      - 6001:6001
     depends_on:
       - universal-db
       - universal-redis

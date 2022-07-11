@@ -110,9 +110,9 @@ namespace App\Models{
  * @property string $text
  * @property string $object_type
  * @property int $icon_type
- * @property int $is_scorched
- * @property int $is_victory_base
- * @property int $is_build_site
+ * @property bool $is_scorched
+ * @property bool $is_victory_base
+ * @property bool $is_build_site
  * @property string $x
  * @property string $y
  * @property \Illuminate\Support\Carbon|null $created_at

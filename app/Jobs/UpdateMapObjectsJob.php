@@ -61,9 +61,9 @@ class UpdateMapObjectsJob implements ShouldQueue
             if (
                 $mapItem->team_id != $mapObject->team_id ||//Town Owner Changed
                 $mapItem->icon_type != $mapObject->icon_type ||//Town Level changed
-                $mapItem->isVictoryBase() !== $mapObject->is_victory_base ||//shouldn`t change...
-                $mapItem->isBuildSite() !== $mapObject->is_build_site ||//Object build status changed
-                $mapItem->isScorched() !== $mapObject->is_scorched//Got hit by a rocket :D
+                $mapItem->isVictoryBase() != $mapObject->is_victory_base ||//shouldn`t change...
+                $mapItem->isBuildSite() != $mapObject->is_build_site ||//Object build status changed
+                $mapItem->isScorched() != $mapObject->is_scorched//Got hit by a rocket :D
             ) {
                 $mapObject->update([
                     'team_id'         => $mapItem->team_id,

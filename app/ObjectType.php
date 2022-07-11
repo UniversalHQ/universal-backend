@@ -98,6 +98,45 @@ enum ObjectType: int
         };
     }
 
+    public static function categoryForCase(ObjectType $objectType)
+    {
+        return match ($objectType) {
+            self::TOWN_BASE_ONE,
+            self::TOWN_BASE_TWO,
+            self::TOWN_BASE_THREE,
+            self::RELIC_BASE_ONE,
+            self::RELIC_BASE_TWO,
+            self::RELIC_BASE_THREE,
+            self::GARRISON_STATION => 'bases',
+
+            self::HOSPITAL,
+            self::VEHICLE_FACTORY,
+            self::REFINERY,
+            self::SHIPYARD,
+            self::ENGINEERING_CENTER,
+            self::STORAGE_FACILITY,
+            self::FACTORY,
+            self::CONSTRUCTION_YARD,
+            self::MASS_PRODUCTION_FACTORY,
+
+            self::SEAPORT => 'industry',
+            self::SALVAGE_FIELD,
+            self::COMPONENT_FIELD,
+            self::SULFUR_FIELD,
+            self::SULFUR_MINE,
+            self::SALVAGE_MINE,
+            self::OIL_WELL,
+            self::COMPONENT_MINE => 'resources',
+
+            self::SPECIAL_BASE,
+            self::OBSERVATION_TOWER,
+            self::ROCKET_SITE,
+            self::COASTAL_GUN,
+            self::STORM_CANNON,
+            self::INTEL_CENTER => 'strategic',
+        };
+    }
+
     public static function getAssetName(ObjectType $objectType)
     {
         return match ($objectType) {
