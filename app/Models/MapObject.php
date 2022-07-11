@@ -97,16 +97,16 @@ class MapObject extends Model
     {
         $styling = $this->team_id;
 
-        if ($this->object_type === 'SALVAGE_FIELD' || $this->object_type === 'SALVAGE_MINE') {
+        if ($this->object_type === ObjectType::SALVAGE_FIELD || $this->object_type === ObjectType::SALVAGE_MINE) {
             $styling = 'SCRAP';
         }
-        if ($this->object_type === 'COMPONENT_FIELD' || $this->object_type === 'COMPONENT_MINE') {
+        if ($this->object_type === ObjectType::COMPONENT_FIELD || $this->object_type === ObjectType::COMPONENT_MINE) {
             $styling = 'COMPONENT';
         }
-        if ($this->object_type === 'SULFUR_FIELD' || $this->object_type === 'SULFUR_MINE') {
+        if ($this->object_type === ObjectType::SULFUR_FIELD || $this->object_type === ObjectType::SULFUR_MINE) {
             $styling = 'SULFUR';
         }
-        if ($this->object_type === 'OIL_WELL') {
+        if ($this->object_type === ObjectType::OIL_WELL) {
             $styling = 'OIL';
         }
 
