@@ -14,6 +14,8 @@ services:
       dockerfile: ./x_infrastructure/docker/app/Dockerfile
     restart: always
     working_dir: /var/www
+    ports:
+      - 6001:6001
     volumes:
       - storagedata:/var/www/storage
     env_file: 'env.psql.local'
@@ -49,9 +51,8 @@ services:
   universal-db:
     image: postgres
     restart: always
-    # TODO
-    #volumes:
-      #- dbdata:/var/lib/mysql
+    volumes:
+      - dbdata:/var/lib/postgresql/data
     ports:
       - 33069:5432
     environment:
