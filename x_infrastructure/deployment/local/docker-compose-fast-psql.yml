@@ -1,0 +1,79 @@
+version: '3'
+
+# psql is more quirky than mysql and may require not only
+# docker-compose -f x_infrastructure/deployment/local/docker-compose-fast-psql.yml exec universal-backend php artisan migrate:fresh --seed
+# but also: 
+# docker-compose -f x_infrastructure/deployment/local/docker-compose-fast-psql.yml exec universal-backend php artisan api:update-maps
+
+services:
+  #  The Application
+  universal-backend:
+    image: universal_hq/backend:local
+    build:
+      context: ../../../.
+      dockerfile: ./x_infrastructure/docker/app/Dockerfile
+    restart: always
+    working_dir: /var/www
+    ports:
+      - 6001:6001
+    volumes:
+      - storagedata:/var/www/storage
+    env_file: 'env.psql.local'
+    environment:
+      - "DB_HOST=universal-db"
+      - "DB_PORT=5432"
+      - "DB_CONNECTION=pgsql"
+      - "DB_DATABASE=universal"
+      - "DB_USERNAME=universal"
+      - "DB_PASSWORD=universal"
+      - "REDIS_HOST=universal-redis"
+    depends_on:
+      - universal-db
+      - universal-redis
+    networks:
+      - universal-network
+
+  # The Web Server
+  universal-web:
+    image: universal_hq/web:local
+    build:
+      context: ../../../.
+      dockerfile: ./x_infrastructure/docker/web/Dockerfile
+    restart: always
+    ports:
+      - 8080:80
+    depends_on:
+      - universal-backend
+    networks:
+      - universal-network
+
+  # The Database
+  universal-db:
+    image: postgres
+    restart: always
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+    ports:
+      - 33069:5432
+    environment:
+      - "POSTGRES_DB=universal"
+      - "POSTGRES_USER=universal"
+      - "POSTGRES_PASSWORD=universal"
+    networks:
+      - universal-network
+  # redis
+  universal-redis:
+    image: redis:6.0.5-alpine
+    restart: always
+    volumes:
+      - redisdata:/data
+    networks:
+      - universal-network
+
+volumes:
+  dbdata:
+  redisdata:
+  storagedata:
+
+networks:
+  universal-network:

@@ -7,7 +7,7 @@ RUN apt-get update && apt-get install -y \
         && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
 
 COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/bin/
-RUN install-php-extensions gd imagick intl pdo_mysql redis zip
+RUN install-php-extensions gd imagick intl pdo_mysql pdo_pgsql redis zip
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
