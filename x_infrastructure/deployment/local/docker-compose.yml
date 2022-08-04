@@ -42,7 +42,7 @@ services:
 
   # The Database
   universal-db:
-    image: mysql:8.0.22
+    image: arm64v8/mysql:8.0.30
     restart: always
     volumes:
       - universal_dbdata:/var/lib/mysql
