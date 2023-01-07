@@ -77,39 +77,19 @@ class MapObject extends Model
 
     public function getAssetUrlAttribute()
     {
-        $assetName = ObjectType::getAssetName($this->object_type);
-        if ($this->is_victory_base) {
-            $assetName = 'civiccenter';
-        }
-        if ($this->is_scorched) {
-            $assetName = 'scorchedtown';
-        }
+        $assetName = ObjectType::getAssetName($this->object_type, $this->team_id);
+        //if ($this->is_victory_base) {
+        //    $assetName = 'civiccenter';
+        //}
+        //if ($this->is_scorched) {
+        //    $assetName = 'scorchedtown';
+        //}
 
-        return 'https://assets.foxhole.tools/icons/map/' . $assetName . '.png';
+        return 'https://raw.githubusercontent.com/UniversalHQ/universal-images/master/MapIcons/' . $assetName . '.png';
     }
 
     public function getCategoryAttribute()
     {
         return ObjectType::categoryForCase($this->object_type);
-    }
-
-    public function getStylingAttribute()
-    {
-        $styling = $this->team_id;
-
-        if ($this->object_type === ObjectType::SALVAGE_FIELD || $this->object_type === ObjectType::SALVAGE_MINE) {
-            $styling = 'SCRAP';
-        }
-        if ($this->object_type === ObjectType::COMPONENT_FIELD || $this->object_type === ObjectType::COMPONENT_MINE) {
-            $styling = 'COMPONENT';
-        }
-        if ($this->object_type === ObjectType::SULFUR_FIELD || $this->object_type === ObjectType::SULFUR_MINE) {
-            $styling = 'SULFUR';
-        }
-        if ($this->object_type === ObjectType::OIL_WELL) {
-            $styling = 'OIL';
-        }
-
-        return $styling;
     }
 }

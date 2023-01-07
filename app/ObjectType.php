@@ -53,6 +53,8 @@ enum ObjectType: int
     case TOWN_BASE_THREE = 58;
     case STORM_CANNON = 59;
     case INTEL_CENTER = 60;
+    case COAL_FIELD = 61;
+    case OIL_FIELD = 62;
 
     public static function casesForCategory($category)
     {
@@ -84,7 +86,8 @@ enum ObjectType: int
                 self::SULFUR_FIELD,
                 self::SULFUR_MINE,
                 self::SALVAGE_MINE,
-                self::OIL_WELL,
+                self::COAL_FIELD,
+                self::OIL_FIELD,
                 self::COMPONENT_MINE,
             ],
             'strategic' => [
@@ -118,14 +121,15 @@ enum ObjectType: int
             self::FACTORY,
             self::CONSTRUCTION_YARD,
             self::MASS_PRODUCTION_FACTORY,
-
             self::SEAPORT => 'industry',
+
             self::SALVAGE_FIELD,
             self::COMPONENT_FIELD,
             self::SULFUR_FIELD,
             self::SULFUR_MINE,
             self::SALVAGE_MINE,
-            self::OIL_WELL,
+            self::COAL_FIELD,
+            self::OIL_FIELD,
             self::COMPONENT_MINE => 'resources',
 
             self::SPECIAL_BASE,
@@ -137,46 +141,62 @@ enum ObjectType: int
         };
     }
 
-    public static function getAssetName(ObjectType $objectType)
+    public static function getAssetName(ObjectType $objectType, string $team)
+    {
+        return 'MapIcon' . self::getBaseName($objectType) . self::getTeamName($team);
+    }
+
+    protected static function getBaseName(ObjectType $objectType)
     {
         return match ($objectType) {
             // bases
-            self::TOWN_BASE_ONE => 'townbasetier1',
-            self::TOWN_BASE_TWO => 'townbasetier2',
-            self::TOWN_BASE_THREE => 'townbasetier3',
-            self::RELIC_BASE_ONE => 'relicbase',
-            self::RELIC_BASE_TWO => 'relicbase',
-            self::RELIC_BASE_THREE => 'relicbase',
-            self::GARRISON_STATION => 'safehouse',
+            self::TOWN_BASE_ONE => 'TownBaseTier1',
+            self::TOWN_BASE_TWO => 'TownBaseTier2',
+            self::TOWN_BASE_THREE => 'TownBaseTier3',
+            self::RELIC_BASE_ONE => 'RelicBase',
+            self::RELIC_BASE_TWO => 'RelicBase',
+            self::RELIC_BASE_THREE => 'RelicBase',
+            self::GARRISON_STATION => 'Safehouse',
 
             // industry
-            self::HOSPITAL => 'hospital',
-            self::VEHICLE_FACTORY => 'vehicle',
-            self::REFINERY => 'manufacturing',
-            self::SHIPYARD => 'shipyard',
-            self::ENGINEERING_CENTER => 'techcenter',
-            self::STORAGE_FACILITY => 'storagefacility',
-            self::FACTORY => 'factory',
-            self::CONSTRUCTION_YARD => 'constructionyard',
-            self::MASS_PRODUCTION_FACTORY => 'massproductionfactory',
-            self::SEAPORT => 'seaport',
+            self::HOSPITAL => 'Medical',
+            self::VEHICLE_FACTORY => 'Vehicle',
+            self::REFINERY => 'Manufacturing',
+            self::SHIPYARD => 'Shipyard',
+            self::ENGINEERING_CENTER => 'TechCenter',
+            self::STORAGE_FACILITY => 'StorageFacility',
+            self::FACTORY => 'Factory',
+            self::CONSTRUCTION_YARD => 'ConstructionYard',
+            self::MASS_PRODUCTION_FACTORY => 'MassProductionFactory',
+            self::SEAPORT => 'Seaport',
 
             // resources
-            self::SALVAGE_FIELD => 'salvage',
-            self::COMPONENT_FIELD => 'components',
-            self::SULFUR_FIELD => 'sulfur',
-            self::SULFUR_MINE => 'sulfurmine',
-            self::SALVAGE_MINE => 'scrapmine',
-            self::OIL_WELL => 'fuel',
-            self::COMPONENT_MINE => 'componentmine',
+            self::SALVAGE_FIELD => 'SalvageColor',
+            self::COMPONENT_FIELD => 'ComponentsColor',
+            self::COMPONENT_MINE => 'ComponentMineColor',
+            self::SULFUR_FIELD => 'SulfurColor',
+            self::SULFUR_MINE => 'SulfurMineColor',
+            self::SALVAGE_MINE => 'SalvageMineColor',
+            self::COAL_FIELD => 'CoalFieldColor',
+            self::OIL_FIELD => 'OilFieldColor',
+            self::OIL_WELL => 'OilFieldColor',
 
             // strategic
-            self::SPECIAL_BASE => 'skeep',
-            self::OBSERVATION_TOWER => 'observationtower',
-            self::ROCKET_SITE => 'rocketfacility',
-            self::COASTAL_GUN => 'coastalgun',
-            self::STORM_CANNON => 'stormcannon',
-            self::INTEL_CENTER => 'intelcenter',
+            self::SPECIAL_BASE => 'FortKeep',
+            self::OBSERVATION_TOWER => 'ObservationTower',
+            self::ROCKET_SITE => 'RocketSite',
+            self::COASTAL_GUN => 'CoastalGun',
+            self::STORM_CANNON => 'StormCannon',
+            self::INTEL_CENTER => 'IntelCenter',
+        };
+    }
+
+    protected static function getTeamName(string $teamName)
+    {
+        return match ($teamName) {
+            'COLONIALS' => 'Colonial',
+            'WARDENS' => 'Warden',
+            'NONE' => '',
         };
     }
 }
