@@ -18,8 +18,8 @@ class CreateUsersTable extends Migration
             $table->string('username');
             $table->string('discriminator');
             $table->unsignedBigInteger('discord_id');
-            $table->string('discord_avatar_id');
-            $table->string('discord_banner_id');
+            $table->string('discord_avatar_id')->nullable();
+            $table->string('discord_banner_id')->nullable();
             $table->string('locale');
             $table->rememberToken();
             $table->timestamps();

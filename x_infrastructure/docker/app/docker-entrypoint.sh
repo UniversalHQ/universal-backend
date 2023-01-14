@@ -9,7 +9,7 @@ php artisan cache:clear
 php artisan view:clear
 
 #Cache the config
-php artisan config:cache
+#php artisan config:cache
 
 cron
 

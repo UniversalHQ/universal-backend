@@ -36,7 +36,7 @@ class War extends Model
      */
     public static function getCurrentWar()
     {
-        return self::orderBy('war_id', 'desc')->first();
+        return self::orderBy('id', 'desc')->first();
     }
 
     public function mapWarReports()

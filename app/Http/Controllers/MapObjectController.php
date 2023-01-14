@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\MapObjectResource;
 use App\Models\MapObject;
+use App\Models\War;
 use App\ObjectType;
 use Illuminate\Http\Request;
 
@@ -14,6 +15,8 @@ class MapObjectController extends Controller
         $query = MapObject::query();
         if ($war = $request->get('war')) {
             $query->where('war_id', $war);
+        } else {
+            $query->where('war_id', War::getCurrentWar()->id);
         }
         if ($team = $request->get('team')) {
             $query->where('team', $team);
