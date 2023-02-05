@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Log;
  * @package App\Models
  * @mixin IdeHelperMapObject
  * @property string assetUrl
+ * @property ObjectType object_type
+ * @property string $team_id
  */
 class MapObject extends Model
 {
@@ -73,6 +75,11 @@ class MapObject extends Model
     public function mapItem()
     {
         return $this->hasOne(MapItem::class);
+    }
+
+    public function getRangesAttribute()
+    {
+        return ObjectType::getRanges($this->object_type);
     }
 
     public function getAssetUrlAttribute()

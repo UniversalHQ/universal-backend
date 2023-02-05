@@ -17,6 +17,8 @@ class RegionCenterPoint extends LeafletPoint
     function __construct(RegionHex $regionHex)
     {
         $this->regionHight = -$this->mapHight / self::HEX_STACK_COUNT;
+        // 256 / 7 = 36,5714285714 || 1900m
+        // 2 * 256 / 7 / 1.73205080757 = 42,2290482607   || 2194m
         $this->regionWidth = 2 * $this->regionHight / sqrt(3);
         $this->sideLength = sqrt(3) * $this->regionHight / 2;
 

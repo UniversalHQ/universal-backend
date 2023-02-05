@@ -16,6 +16,7 @@ class MapObjectResource extends Resource
             'lat'             => $this->lat,
             'lng'             => $this->lng,
             'asset_url'       => $this->asset_url,
+            'circles'       => $this->ranges,
             'category'        => $this->category,
         ];
     }

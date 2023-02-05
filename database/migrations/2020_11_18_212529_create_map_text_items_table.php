@@ -19,10 +19,10 @@ class CreateMapTextItemsTable extends Migration
 
             $table->string('text');
             $table->string('map_marker_type');
-            $table->decimal('x',12,10);
-            $table->decimal('y',12,10);
-            $table->decimal('lat',13,10);
-            $table->decimal('lng',13,10);
+            $table->decimal('x',16,14);
+            $table->decimal('y',16,14);
+            $table->decimal('lat',17,14);
+            $table->decimal('lng',17,14);
 
             $table->timestamps();
         });

@@ -191,7 +191,109 @@ enum ObjectType: int
         };
     }
 
-    protected static function getTeamName(string $teamName)
+    public static function getRanges($objectType): array
+    {
+        return match ($objectType) {
+            // bases
+            self::TOWN_BASE_ONE => [
+                [
+                    'range' => 150,
+                    'type'  => 'ai'
+                ]
+            ],
+            self::TOWN_BASE_TWO => [
+                [
+                    'range' => 150,
+                    'type'  => 'ai'
+                ]
+            ],
+            self::TOWN_BASE_THREE => [
+                [
+                    'range' => 150,
+                    'type'  => 'ai'
+                ]
+            ],
+            self::RELIC_BASE_ONE => [
+                [
+                    'range' => 150,
+                    'type'  => 'ai'
+                ]
+            ],
+            self::RELIC_BASE_TWO => [
+                [
+                    'range' => 150,
+                    'type'  => 'ai'
+                ]
+            ],
+            self::RELIC_BASE_THREE => [
+                [
+                    'range' => 150,
+                    'type'  => 'ai'
+                ]
+            ],
+            self::GARRISON_STATION => [
+                [
+                    'range' => 100,
+                    'type'  => 'ai'
+                ]
+            ],
+
+            // strategic
+            self::SPECIAL_BASE => [
+                [
+                    'range' => 80,
+                    'type'  => 'ai'
+                ]
+            ],
+            self::OBSERVATION_TOWER => [
+                [
+                    'range' => 240,
+                    'type'  => 'intel'
+                ],
+            ],
+            self::COASTAL_GUN => [
+                [
+                    'range' => 100,
+                    'type'  => 'arty'
+                ],
+                [
+                    'range' => 150,
+                    'type'  => 'arty'
+                ],
+            ],
+            self::STORM_CANNON => [
+                [
+                    'range' => 100,
+                    'type'  => 'arty'
+                ],
+                [
+                    'range' => 400,
+                    'type'  => 'arty'
+                ],
+                [
+                    'range' => 1000,
+                    'type'  => 'arty'
+                ],
+                [
+                    'range' => 1300,
+                    'type'  => 'arty'
+                ],
+            ],
+            self::INTEL_CENTER => [
+                [
+                    'range' => 500,
+                    'type'  => 'intel'
+                ],
+                [
+                    'range' => 2000,
+                    'type'  => 'intel'
+                ],
+            ],
+            default => []
+        };
+    }
+
+    protected static function getTeamName(string $teamName): string
     {
         return match ($teamName) {
             'COLONIALS' => 'Colonial',
